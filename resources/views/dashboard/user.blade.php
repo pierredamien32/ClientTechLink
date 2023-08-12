@@ -26,7 +26,7 @@
                 <div class="card bg-gradient-danger card-img-holder text-white">
                     <div class="card-body">
                         <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                        <h4 class="font-weight-normal mb-3">Utilisateur Total  <i
+                        <h4 class="font-weight-normal mb-3">Utilisateur Total <i
                                 class="mdi mdi-chart-line mdi-24px float-right"></i>
                         </h4>
                         <h2 class="mb-5">10</h2>
@@ -38,8 +38,7 @@
                 <div class="card bg-gradient-info card-img-holder text-white">
                     <div class="card-body">
                         <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                        <h4 class="font-weight-normal mb-3"><i
-                                class="mdi mdi-bookmark-outline mdi-24px float-right"></i>
+                        <h4 class="font-weight-normal mb-3"><i class="mdi mdi-bookmark-outline mdi-24px float-right"></i>
                         </h4>
                         <h2 class="mb-5">-------</h2>
                         <h6 class="card-text"></h6>
@@ -50,8 +49,7 @@
                 <div class="card bg-gradient-success card-img-holder text-white">
                     <div class="card-body">
                         <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                        <h4 class="font-weight-normal mb-3"><i
-                                class="mdi mdi-diamond mdi-24px float-right"></i>
+                        <h4 class="font-weight-normal mb-3"><i class="mdi mdi-diamond mdi-24px float-right"></i>
                         </h4>
                         <h2 class="mb-5">-------</h2>
                         <h6 class="card-text"></h6>
@@ -92,11 +90,11 @@
                                         </td>
                                         <td>le 12/08/2023</td>
                                         <td>
-                                            <a href="">
+                                            {{-- <a href="">
                                                 <span class="page-title-icon bg-gradient-success text-white me-2 tail">
                                                     <i class="fa-solid fa-list"></i>
                                                 </span>
-                                            </a>
+                                            </a> --}}
                                             <button class="page-title-icon bg-primary text-white me-2 tail" type="button"
                                                 data-bs-toggle="modal" data-bs-target="#modal-modification"
                                                 style="border: none;">
@@ -142,16 +140,45 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="staticBackdropLabel">Ajout d'un client</h5>
+                        <h5 class="modal-title" id="staticBackdropLabel">Ajout d'un utilisateur</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
+                        <form class="forms-sample">
+                            <div class="form-group">
+                                <label for="exampleInputUsername1">Pseudo</label>
+                                <input type="text" class="form-control" id="exampleInputUsername1"
+                                    placeholder="Username">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Email</label>
+                                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleFormControlSelect3">Type d'utilisateur</label>
+                                <select class="form-control form-control-sm" id="exampleFormControlSelect3">
+                                    <option>Super Admin</option>
+                                    <option>Admin</option>
+                                    <option>Simple user</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Mot de passe</label>
+                                <input type="password" class="form-control" id="exampleInputPassword1"
+                                    placeholder="Password">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputConfirmPassword1">Confirmer le mot de passe</label>
+                                <input type="password" class="form-control" id="exampleInputConfirmPassword1"
+                                    placeholder="Confirm password">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                <button type="button" class="btn btn-primary">Enregister</button>
+                            </div>
+                        </form>
+                    </div>
 
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                        <button type="button" class="btn btn-primary">Enregister</button>
-                    </div>
                 </div>
             </div>
         </div>
@@ -160,12 +187,12 @@
 
     {{-- Modal boite de modification  --}}
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal fade" id="modal-modification" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal fade" id="modal-modification" data-bs-backdrop="static" data-bs-keyboard="false"
+            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="staticBackdropLabel">Modification d'un client</h5>
+                        <h5 class="modal-title" id="staticBackdropLabel">Modification d'un utilisateur</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -188,11 +215,11 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="staticBackdropLabel">Suppression d'un client</h5>
+                        <h5 class="modal-title" id="staticBackdropLabel">Suppression d'un utilisateur</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        Êtes vous sûr de vouloir supprimer ce client?
+                        Êtes vous sûr de vouloir supprimer cet utilisateur?
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
