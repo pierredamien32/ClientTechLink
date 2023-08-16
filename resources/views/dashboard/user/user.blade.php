@@ -96,18 +96,18 @@
                                                     <i class="fa-solid fa-list"></i>
                                                 </span>
                                             </a> --}}
-                                                <button class="page-title-icon bg-primary text-white me-2 tail"
+                                                <a href="#edit{{ $user->id }}" class="page-title-icon bg-primary text-white me-2 tail"
                                                     type="button" data-bs-toggle="modal"
-                                                    data-bs-target="#modal-modification" style="border: none;">
+                                                     style="border: none;">
                                                     <i class="fa-solid fa-pen-to-square"></i>
-                                                </button>
+                                                </a>
                                                 <button type="button" data-bs-toggle="modal"
                                                     data-bs-target="#modal-confirmation"
                                                     class="page-title-icon bg-danger text-white me-2 tail"
                                                     style="border: none;" >
                                                     <i class="fa-solid fa-trash"></i>
                                                 </button>
-                                                
+                                                @include('dashboard.user.action')
                                             </td>
                                         </tr>
                                     </tbody>
@@ -219,29 +219,6 @@
         </div>
     </div>
     {{-- Fin du Modal boite d'Ajout --}}
-
-    {{-- Modal boite de modification  --}}
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal fade" id="modal-modification" data-bs-backdrop="static" data-bs-keyboard="false"
-            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="staticBackdropLabel">Modification d'un utilisateur</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                        <button type="button" class="btn btn-primary">Modifier</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    {{-- Fin du Modal boite de modification --}}
 
     {{-- Modal boite de confirmation  --}}
     <div class="modal-dialog modal-dialog-centered">

@@ -23,7 +23,7 @@ Route::get('/login', function () {
     return view('login');
 });
 Route::get('/dashboard', function () {
-    return view('dashboard.clients');
+    return view('dashboard.client.clients');
 });
 
 Route::get('/mail', function () {
