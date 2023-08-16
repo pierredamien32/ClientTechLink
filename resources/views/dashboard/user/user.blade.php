@@ -29,8 +29,8 @@
                         <h4 class="font-weight-normal mb-3">Utilisateur Total <i
                                 class="mdi mdi-chart-line mdi-24px float-right"></i>
                         </h4>
-                        <h2 class="mb-5">10</h2>
-                        <h6 class="card-text">Mise à jour depuis le 11/08/2023</h6>
+                        <h2 class="mb-5">{{ count($utilisateurs) }}</h2>
+                        <h6 class="card-text">Mise à jour depuis le {{$date->updated_at->format('d/m/y')}}</h6>
                     </div>
                 </div>
             </div>
@@ -64,6 +64,7 @@
                     <div class="card-body">
                         <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
                             <h4 class="card-title">Liste des Utilisateurs</h4>
+                            
                             <button type="button" data-bs-toggle="modal" data-bs-target="#modal-ajout"
                                 class="btn btn-block btn-lg btn-gradient-primary">+ Ajouter un utilisateur</button>
                         </div>
@@ -96,17 +97,16 @@
                                                     <i class="fa-solid fa-list"></i>
                                                 </span>
                                             </a> --}}
-                                                <a href="#edit{{ $user->id }}" class="page-title-icon bg-primary text-white me-2 tail"
-                                                    type="button" data-bs-toggle="modal"
-                                                     style="border: none;">
+                                                <a href="#edit{{ $user->id }}"
+                                                    class="page-title-icon bg-primary text-white me-2 tail" type="button"
+                                                    data-bs-toggle="modal" style="border: none;">
                                                     <i class="fa-solid fa-pen-to-square"></i>
                                                 </a>
-                                                <button type="button" data-bs-toggle="modal"
-                                                    data-bs-target="#modal-confirmation"
+                                                <a href="#delete{{ $user->id }}" type="button" data-bs-toggle="modal"
                                                     class="page-title-icon bg-danger text-white me-2 tail"
-                                                    style="border: none;" >
+                                                    style="border: none;">
                                                     <i class="fa-solid fa-trash"></i>
-                                                </button>
+                                                </a>
                                                 @include('dashboard.user.action')
                                             </td>
                                         </tr>
@@ -127,7 +127,7 @@
             </div>
         </div>
     </div>
-    
+
     <!-- plugins:js -->
     <script src="{{ asset('assets/vendors/js/vendor.bundle.base.js') }}"></script>
     <!-- endinject -->
@@ -183,7 +183,7 @@
                                     id="exampleFormControlSelect3">
                                     <option>Super Admin</option>
                                     <option>Admin</option>
-                                    <option>Simple user</option>
+                                    <option>Simple Utilisateur</option>
                                 </select>
                                 @error('type_user')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -219,27 +219,4 @@
         </div>
     </div>
     {{-- Fin du Modal boite d'Ajout --}}
-
-    {{-- Modal boite de confirmation  --}}
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal fade" id="modal-confirmation" data-bs-backdrop="static" data-bs-keyboard="false"
-            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="staticBackdropLabel">Suppression d'un utilisateur</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        Êtes vous sûr de vouloir supprimer cet utilisateur?
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                        <button type="button" class="btn btn-primary">Oui, je suis sûr!</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    {{-- Fin du Modal boite de confirmation --}}
 @endsection

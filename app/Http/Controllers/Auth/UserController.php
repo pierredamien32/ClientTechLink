@@ -17,7 +17,11 @@ class UserController extends Controller
     public function index()
     {
         $utilisateurs = User::latest()->paginate(10);
-        return view('dashboard.user.user', compact('utilisateurs'));
+        $date = $utilisateurs->first();
+        // foreach ($utilisateurs as $user) {
+        //     $date = $user->updated_at;
+        // }
+        return view('dashboard.user.user', compact('utilisateurs', 'date'));
     }
 
     /**
@@ -63,7 +67,7 @@ class UserController extends Controller
                         'lien' => 'http://127.0.0.1:8000/'
                     ]);
 
-                    Mail::to($email)->send(new ConnecteMail($user));
+                    // Mail::to($email)->send(new ConnecteMail($user));
                 }
 
                 if ($type_user === "Admin") {
@@ -75,10 +79,10 @@ class UserController extends Controller
                         'role_id' => 2,
                         'lien' => 'http://127.0.0.1:8000/'
                     ]);
-                    Mail::to($email)->send(new ConnecteMail($user));
+                    // Mail::to($email)->send(new ConnecteMail($user));
                 }
 
-                if ($type_user === "Simple user") {
+                if ($type_user === "Simple Utilisateur") {
                     $user = User::create([
                         'pseudo' => $request->pseudo,
                         'email' => $email,
@@ -87,7 +91,7 @@ class UserController extends Controller
                         'role_id' => 3,
                         'lien' => 'http://127.0.0.1:8000/'
                     ]);
-                    Mail::to($email)->send(new ConnecteMail($user));
+                    // Mail::to($email)->send(new ConnecteMail($user));
                 }
 
                 //  Auth::login($user);
@@ -110,7 +114,9 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $user = User::findOrFail($id);
+        // dd($produit);
+        return view('dashboard.user.action', compact('user'));
     }
 
     /**
@@ -118,7 +124,22 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        
+        $user = User::findOrFail($id);
+
+        $user->pseudo = $request->pseudo;
+
+        if($user->email != $request->email){
+            $user->email = $request->email;
+            //Mail::to($user->email)->send(new ConnecteMail($user));
+        }
+
+        $user->type_user = $request->type_user;
+
+
+        $user->update();
+
+        return redirect()->route('user.index');
     }
 
     /**
@@ -126,6 +147,10 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        $user->delete();
+
+        return redirect()->back();
     }
 }

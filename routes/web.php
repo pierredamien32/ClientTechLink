@@ -36,4 +36,6 @@ Route::get('/mail', function () {
 
 Route::get('/utilisateurs', [UserController::class, 'index'])->name('user.index');
 Route::post('/utilisateurs', [UserController::class, 'store'])->name('user.store');
+Route::post('/utilisateurs/update/{id}', [UserController::class, 'update'])->name('user.update');
+Route::delete('/utilisateurs/delete/{id}', [UserController::class, 'destroy'])->name('user.delete');
 
