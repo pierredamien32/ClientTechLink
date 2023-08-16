@@ -72,7 +72,7 @@ a:hover {
         <div class="style">
             <h1 class="text-white font-weight-bold" style="font-size: 60px;">Bienvenue sur ClientTechLink!</h1>
             <p class="text-white" style="font-size: 20px;">Ceci est la plateforme de support technique dédiée aux clients d'AnyxTech.</p>
-            <a href="{{url('/login')}}" class="text-gradient">Connectez-vous </a>
+            <a href="{{route('createFormLogin')}}" class="text-gradient">Connectez-vous </a>
         </div>
     </div>
 </body>

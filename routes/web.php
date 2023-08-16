@@ -1,8 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\UserController;
-use App\Mail\ConnecteMail;
-use Illuminate\Support\Facades\Mail;
+use App\Http\Controllers\ClientController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,23 +18,16 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('acceuil');
 });
-Route::get('/login', function () {
-    return view('login');
-});
-Route::get('/dashboard', function () {
-    return view('dashboard.client.clients');
-});
 
-Route::get('/mail', function () {
-    // Mail::to('orpheetohou16@gmail.com')->send(new ConnecteMail());
-    // return view('dashboard.clients');
+
+Route::get('/login', [UserController::class, 'createFormLogin'])->name('createFormLogin');
+Route::post('/login', [UserController::class, 'loginUsers'])->name('loginUsers');
+// Route accessible que si l'utilisateur est connecté
+Route::middleware(['auth', 'auth.session'])->group(function () {
+    Route::get('/utilisateurs', [UserController::class, 'index'])->name('user.index');
+    Route::post('/utilisateurs', [UserController::class, 'store'])->name('user.store');
+    Route::post('/utilisateurs/update/{id}', [UserController::class, 'update'])->name('user.update');
+    Route::delete('/utilisateurs/delete/{id}', [UserController::class, 'destroy'])->name('user.delete');
+    Route::post('/logout', [Usercontroller::class, 'logout'])->name('logout');
+    Route::get('/dashboard', [ClientController::class, 'create'])->name('client.create');
 });
-// Route::get('/utilisateurs', function () {
-//     return view('dashboard.user');
-// });
-
-Route::get('/utilisateurs', [UserController::class, 'index'])->name('user.index');
-Route::post('/utilisateurs', [UserController::class, 'store'])->name('user.store');
-Route::post('/utilisateurs/update/{id}', [UserController::class, 'update'])->name('user.update');
-Route::delete('/utilisateurs/delete/{id}', [UserController::class, 'destroy'])->name('user.delete');
-

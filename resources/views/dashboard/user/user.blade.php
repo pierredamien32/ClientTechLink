@@ -5,6 +5,80 @@
         .tail {
             padding: 8px 8px;
         }
+
+        .input-box {
+            position: relative;
+            height: 76px;
+            max-width: 900px;
+            width: 100%;
+            background: #fff;
+            margin: 0 20px;
+            border-radius: 8px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .input-box i,
+        .input-box .button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .input-box i {
+            left: 20px;
+            font-size: 30px;
+            color: #707070;
+        }
+
+        .input-box input {
+            height: 100%;
+            width: 100%;
+            outline: none;
+            font-size: 18px;
+            font-weight: 400;
+            border: none;
+            padding: 0 155px 0 65px;
+            background-color: transparent;
+        }
+
+        .input-box .button {
+            right: 20px;
+            font-size: 16px;
+            font-weight: 400;
+            color: #fff;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 6px;
+            background-color: #4070f4;
+            cursor: pointer;
+        }
+
+        .input-box .button:active {
+            transform: translateY(-50%) scale(0.98);
+        }
+
+        /* Responsive */
+        @media screen and (max-width: 500px) {
+            .input-box {
+                height: 66px;
+                margin: 0 8px;
+            }
+
+            .input-box i {
+                left: 12px;
+                font-size: 25px;
+            }
+
+            .input-box input {
+                padding: 0 112px 0 50px;
+            }
+
+            .input-box .button {
+                right: 12px;
+                font-size: 14px;
+                padding: 8px 18px;
+            }
+        }
     </style>
     <div class="content-wrapper">
         <div class="page-header">
@@ -30,7 +104,9 @@
                                 class="mdi mdi-chart-line mdi-24px float-right"></i>
                         </h4>
                         <h2 class="mb-5">{{ count($utilisateurs) }}</h2>
-                        <h6 class="card-text">Mise à jour depuis le {{$date->updated_at->format('d/m/y')}}</h6>
+                        @if ($date)
+                            <h6 class="card-text">Mise à jour depuis le {{ $date->updated_at->format('d/m/y') }}</h6>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -57,6 +133,16 @@
                 </div>
             </div>
         </div>
+        <div class="row" style="margin-bottom: 20px; display: flex; justify-content:center; align-items:center;">
+            <form action="{{ route('user.index') }}" method="get" accept-charset="UTF-8" role="search">
+                <div class="input-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="Rechercher un utilisateur..." name="search"
+                        value="{{ request()->search }}" />
+                    <button class="button">Rechercher</button>
+                </div>
+            </form>
+        </div>
 
         <div class="row">
             <div class="col-12 grid-margin">
@@ -64,7 +150,7 @@
                     <div class="card-body">
                         <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
                             <h4 class="card-title">Liste des Utilisateurs</h4>
-                            
+
                             <button type="button" data-bs-toggle="modal" data-bs-target="#modal-ajout"
                                 class="btn btn-block btn-lg btn-gradient-primary">+ Ajouter un utilisateur</button>
                         </div>

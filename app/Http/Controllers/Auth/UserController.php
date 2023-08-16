@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Mail\ConnecteMail;
 use App\Models\User;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 
@@ -14,13 +16,21 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $utilisateurs = User::latest()->paginate(10);
-        $date = $utilisateurs->first();
-        // foreach ($utilisateurs as $user) {
-        //     $date = $user->updated_at;
-        // }
+        $search = $request->search;
+        
+        if ($search) {
+            $utilisateurs = User::query()
+                ->where('pseudo', 'LIKE', '%'.$search.'%')
+                ->orWhere('email', 'LIKE', '%'.$search.'%')
+                ->paginate(10); 
+        } else {
+
+            $utilisateurs = User::latest()->paginate(10);
+            $date = $utilisateurs->first();
+        }
+            $date = $utilisateurs->first();
         return view('dashboard.user.user', compact('utilisateurs', 'date'));
     }
 
@@ -30,6 +40,10 @@ class UserController extends Controller
     public function create()
     {
         //
+    }
+
+    public function createFormLogin(){
+        return view('login');
     }
 
     /**
@@ -101,6 +115,51 @@ class UserController extends Controller
         // dd(' '.$type_user);
     }
 
+    public function loginUsers(Request $request)
+    {
+        
+        $request->session()->flush();
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
+        // dd('je suis là');
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+            $user = Auth::user();
+            $verifiUser = User::where('id', $user->id)->first();
+            // dd('ok '.$verifiUser);
+
+            session(['pseudo' => $verifiUser->pseudo,
+                    'type_user' => $verifiUser->type_user,
+            ]);
+            Session::put('user_pseudo', $verifiUser->pseudo);
+            Session::put('user_type_user', $verifiUser->type_user);
+             Auth::loginUsingId($user->id);
+           
+            return redirect()->route('client.create');
+        }
+
+        return back()->withErrors([
+            'erreur' => 'Identifiants incorrects.',
+        ])->onlyInput('erreur');
+    }
+
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        $request->session()->flush();
+
+        return redirect()->route('createFormLogin');
+    }
+
+    
     /**
      * Display the specified resource.
      */
