@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Auth\UserController;
+use App\Mail\ConnecteMail;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,6 +25,15 @@ Route::get('/login', function () {
 Route::get('/dashboard', function () {
     return view('dashboard.clients');
 });
-Route::get('/utilisateurs', function () {
-    return view('dashboard.user');
+
+Route::get('/mail', function () {
+    // Mail::to('orpheetohou16@gmail.com')->send(new ConnecteMail());
+    // return view('dashboard.clients');
 });
+// Route::get('/utilisateurs', function () {
+//     return view('dashboard.user');
+// });
+
+Route::get('/utilisateurs', [UserController::class, 'index'])->name('user.index');
+Route::post('/utilisateurs', [UserController::class, 'store'])->name('user.store');
+

@@ -79,43 +79,55 @@
                                         <th> Action </th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            01666556
-                                        </td>
-                                        <td> Deo </td>
-                                        <td>
-                                            John
-                                        </td>
-                                        <td>le 12/08/2023</td>
-                                        <td>
-                                            {{-- <a href="">
+                                @foreach ($utilisateurs as $user)
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                {{ $user->pseudo }}
+                                            </td>
+                                            <td> {{ $user->email }} </td>
+                                            <td>
+                                                {{ $user->type_user }}
+                                            </td>
+                                            <td>le 12/08/2023</td>
+                                            <td>
+                                                {{-- <a href="">
                                                 <span class="page-title-icon bg-gradient-success text-white me-2 tail">
                                                     <i class="fa-solid fa-list"></i>
                                                 </span>
                                             </a> --}}
-                                            <button class="page-title-icon bg-primary text-white me-2 tail" type="button"
-                                                data-bs-toggle="modal" data-bs-target="#modal-modification"
-                                                style="border: none;">
-                                                <i class="fa-solid fa-pen-to-square"></i>
-                                            </button>
-                                            <button type="button" data-bs-toggle="modal"
-                                                data-bs-target="#modal-confirmation"
-                                                class="page-title-icon bg-danger text-white me-2 tail"
-                                                style="border: none;">
-                                                <i class="fa-solid fa-trash"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                </tbody>
+                                                <button class="page-title-icon bg-primary text-white me-2 tail"
+                                                    type="button" data-bs-toggle="modal"
+                                                    data-bs-target="#modal-modification" style="border: none;">
+                                                    <i class="fa-solid fa-pen-to-square"></i>
+                                                </button>
+                                                <button type="button" data-bs-toggle="modal"
+                                                    data-bs-target="#modal-confirmation"
+                                                    class="page-title-icon bg-danger text-white me-2 tail"
+                                                    style="border: none;" >
+                                                    <i class="fa-solid fa-trash"></i>
+                                                </button>
+                                                
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                @endforeach
                             </table>
                         </div>
+                        <div style="margin-top: 20px;"></div>
+                        @if (count($utilisateurs) > 0)
+                            {{ $utilisateurs->links() }}
+                        @else
+                            <div class="d-flex justify-content-center align-items-center">
+                                <p class="card-description">Pas d'utilisateurs.</p>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    
     <!-- plugins:js -->
     <script src="{{ asset('assets/vendors/js/vendor.bundle.base.js') }}"></script>
     <!-- endinject -->
@@ -144,37 +156,60 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form class="forms-sample">
+                        <form action="{{ route('user.store') }}" method="POST" class="forms-sample">
+                            @csrf
                             <div class="form-group">
                                 <label for="exampleInputUsername1">Pseudo</label>
-                                <input type="text" class="form-control" id="exampleInputUsername1"
-                                    placeholder="Username">
+                                <input type="text" class="form-control @error('pseudo') is-invalid @enderror"
+                                    id="exampleInputUsername1" placeholder="Username" name="pseudo"
+                                    value="{{ old('pseudo') }}">
+                                @error('pseudo')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Email</label>
-                                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+                                <input type="email" name="email"
+                                    class="form-control @error('email') is-invalid @enderror" id="exampleInputEmail1"
+                                    placeholder="Email" value="{{ old('email') }}">
+                                @error('email')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <label for="exampleFormControlSelect3">Type d'utilisateur</label>
-                                <select class="form-control form-control-sm" id="exampleFormControlSelect3">
+                                <select name="type_user"
+                                    class="form-control form-control-sm @error('type_user') is-invalid @enderror"
+                                    id="exampleFormControlSelect3">
                                     <option>Super Admin</option>
                                     <option>Admin</option>
                                     <option>Simple user</option>
                                 </select>
+                                @error('type_user')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Mot de passe</label>
-                                <input type="password" class="form-control" id="exampleInputPassword1"
-                                    placeholder="Password">
+                                <input type="password" name="password"
+                                    class="form-control @error('password') is-invalid @enderror"
+                                    id="exampleInputPassword1" placeholder="Password">
+                                @error('password')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputConfirmPassword1">Confirmer le mot de passe</label>
-                                <input type="password" class="form-control" id="exampleInputConfirmPassword1"
-                                    placeholder="Confirm password">
+                                <input type="password" name="password_confirmation"
+                                    class="form-control @error('password_confirmation') is-invalid @enderror"
+                                    id="exampleInputConfirmPassword1" placeholder="Confirm password">
+                                @error('password_confirmation')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                <button type="button" class="btn btn-primary">Enregister</button>
+                                <button type="submit" class="btn btn-primary">Enregister</button>
                             </div>
                         </form>
                     </div>

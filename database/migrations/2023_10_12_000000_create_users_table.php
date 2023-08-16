@@ -15,9 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('pseudo');
             $table->string('email')->unique();
+            $table->string('type_user');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->foreignId('role_id')->constrained();
+            $table->string('lien');
             $table->rememberToken();
             $table->timestamps();
         });
