@@ -24,10 +24,17 @@ Route::get('/login', [UserController::class, 'createFormLogin'])->name('createFo
 Route::post('/login', [UserController::class, 'loginUsers'])->name('loginUsers');
 // Route accessible que si l'utilisateur est connecté
 Route::middleware(['auth', 'auth.session'])->group(function () {
-    Route::get('/utilisateurs', [UserController::class, 'index'])->name('user.index');
-    Route::post('/utilisateurs', [UserController::class, 'store'])->name('user.store');
-    Route::post('/utilisateurs/update/{id}', [UserController::class, 'update'])->name('user.update');
-    Route::delete('/utilisateurs/delete/{id}', [UserController::class, 'destroy'])->name('user.delete');
+    Route::prefix('dashboard')->group(function () {
+        Route::prefix('utilisateurs')->group(function () {
+            Route::get('/', [UserController::class, 'index'])->name('user.index');
+            Route::post('/', [UserController::class, 'store'])->name('user.store');
+            Route::post('/update/{id}', [UserController::class, 'update'])->name('user.update');
+            Route::delete('/delete/{id}', [UserController::class, 'destroy'])->name('user.delete');
+        });
+        
+        Route::get('/client', [ClientController::class, 'create'])->name('client.create');
+    });
+
+
     Route::post('/logout', [Usercontroller::class, 'logout'])->name('logout');
-    Route::get('/dashboard', [ClientController::class, 'create'])->name('client.create');
 });

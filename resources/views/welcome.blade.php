@@ -81,10 +81,11 @@
                                 <a class="dropdown-item" href="#">
                                     <i class="mdi mdi-cached me-2 text-success"></i> Profile </a>
                                 <div class="dropdown-divider"></div>
-                              
+
                                 <form action="{{ route('logout') }}" method="POST">
                                     @csrf
-                                    <button class="dropdown-item" type="submit" style="border: none; background: white; padding:10px 10px;">
+                                    <button class="dropdown-item" type="submit"
+                                        style="border: none; background: white; padding:10px 10px;">
                                         <i class="mdi mdi-logout me-2 text-primary"></i> Se déconnecter </button>
                                 </form>
                             </div>
@@ -239,24 +240,47 @@
                         </li>
                         @if (auth()->check() && auth()->user()['role_id'] == 1)
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ url('/dashboard') }}">
-                                    <span class="menu-title">Les clients</span>
-                                    <i class="mdi mdi-home menu-icon"></i>
-                                </a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ url('/utilisateurs') }}">
+                                <a class="nav-link" href="{{ url('/dashboard/utilisateurs') }}">
                                     <span class="menu-title">Les utilisateurs</span>
                                     <i class="mdi mdi-contacts menu-icon"></i>
                                 </a>
                             </li>
                         @endif
-                        @if (auth()->check() && auth()->user()['role_id'] == 2)
+                        @if ((auth()->check() && auth()->user()['role_id'] == 2) || auth()->user()['role_id'] == 1)
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ url('/dashboard') }}">
+                                <a class="nav-link" href="">
+                                    <span class="menu-title">Les sites</span>
+                                    <i class="mdi mdi-sitemap menu-icon"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="">
+                                    <span class="menu-title">Les Ap</span>
+                                    <i class="mdi mdi-signal-variant menu-icon"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url('/dashboard/client') }}">
                                     <span class="menu-title">Les clients</span>
-                                    <i class="mdi mdi-home menu-icon"></i>
+                                    <i class="mdi mdi-account-box menu-icon"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="">
+                                    <span class="menu-title">Les emplacements</span>
+                                    <i class="mdi mdi-radiobox-marked menu-icon"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="">
+                                    <span class="menu-title">Les radios</span>
+                                    <i class="mdi mdi-signal menu-icon"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="">
+                                    <span class="menu-title">Les routeurs</span>
+                                    <i class="mdi mdi-inbox menu-icon"></i>
                                 </a>
                             </li>
                         @endif

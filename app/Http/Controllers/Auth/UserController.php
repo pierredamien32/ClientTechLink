@@ -135,9 +135,13 @@ class UserController extends Controller
             ]);
             Session::put('user_pseudo', $verifiUser->pseudo);
             Session::put('user_type_user', $verifiUser->type_user);
-             Auth::loginUsingId($user->id);
-           
-            return redirect()->route('client.create');
+            Auth::loginUsingId($user->id);
+            if(Auth::user()->role->id == 1){
+                return redirect()->route('user.index');
+            }else{
+                return redirect()->route('client.create');
+            }
+            
         }
 
         return back()->withErrors([
@@ -159,7 +163,7 @@ class UserController extends Controller
         return redirect()->route('createFormLogin');
     }
 
-    
+
     /**
      * Display the specified resource.
      */
