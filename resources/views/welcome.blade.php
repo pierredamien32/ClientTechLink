@@ -248,19 +248,19 @@
                         @endif
                         @if ((auth()->check() && auth()->user()['role_id'] == 2) || auth()->user()['role_id'] == 1)
                             <li class="nav-item">
-                                <a class="nav-link" href="">
+                                <a class="nav-link" href="{{route('site.index')}}">
                                     <span class="menu-title">Les sites</span>
                                     <i class="mdi mdi-sitemap menu-icon"></i>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="">
+                                <a class="nav-link" href="{{route('ap.index')}}">
                                     <span class="menu-title">Les Ap</span>
                                     <i class="mdi mdi-signal-variant menu-icon"></i>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ url('/dashboard/client') }}">
+                                <a class="nav-link" href="{{ route('client.index') }}">
                                     <span class="menu-title">Les clients</span>
                                     <i class="mdi mdi-account-box menu-icon"></i>
                                 </a>

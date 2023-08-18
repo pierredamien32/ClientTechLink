@@ -10,8 +10,8 @@
         <div class="page-header">
             <h3 class="page-title">
                 <span class="page-title-icon bg-gradient-primary text-white me-2">
-                    <i class="mdi mdi-home"></i>
-                </span> Dashboard
+                    <i class="mdi mdi-account-box"></i>
+                </span> Clients
             </h3>
             <nav aria-label="breadcrumb">
                 <ul class="breadcrumb">
@@ -38,11 +38,11 @@
                 <div class="card bg-gradient-info card-img-holder text-white">
                     <div class="card-body">
                         <img src="{{asset('assets/images/dashboard/circle.svg')}}" class="card-img-absolute" alt="circle-image" />
-                        <h4 class="font-weight-normal mb-3"><i
+                        <h4 class="font-weight-normal mb-3">Nombre de particulier<i
                                 class="mdi mdi-bookmark-outline mdi-24px float-right"></i>
                         </h4>
-                        <h2 class="mb-5">-------</h2>
-                        <h6 class="card-text"></h6>
+                        <h2 class="mb-5">50</h2>
+                        <h6 class="card-text">Mise à jour depuis le 11/08/2023</h6>
                     </div>
                 </div>
             </div>
@@ -50,11 +50,11 @@
                 <div class="card bg-gradient-success card-img-holder text-white">
                     <div class="card-body">
                         <img src="{{asset('assets/images/dashboard/circle.svg')}}" class="card-img-absolute" alt="circle-image" />
-                        <h4 class="font-weight-normal mb-3"><i
+                        <h4 class="font-weight-normal mb-3">Nombre d'entreprise<i
                                 class="mdi mdi-diamond mdi-24px float-right"></i>
                         </h4>
-                        <h2 class="mb-5">-------</h2>
-                        <h6 class="card-text"></h6>
+                        <h2 class="mb-5">50</h2>
+                        <h6 class="card-text">Mise à jour depuis le 11/08/2023</h6>
                     </div>
                 </div>
             </div>
@@ -151,12 +151,72 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-
+                        <form action="{{ route('client.store') }}" method="POST" class="forms-sample">
+                            @csrf
+                            <div class="form-group">
+                                <label for="exampleInputUsername1">Nom du client</label>
+                                <input type="text" class="form-control @error('nom') is-invalid @enderror"
+                                    id="exampleInputUsername1" placeholder="Nom du client si nécessaire" name="nom"
+                                    value="{{ old('nom') }}">
+                                @error('nom')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputUsername1">Prénom du client</label>
+                                <input type="text" class="form-control @error('prenom') is-invalid @enderror"
+                                    id="exampleInputUsername1" placeholder="Prénom du client si nécessaire" name="prenom"
+                                    value="{{ old('prenom') }}">
+                                @error('prenom')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputUsername1">Denomination de l'entreprise</label>
+                                <input type="text" class="form-control @error('denomination') is-invalid @enderror"
+                                    id="exampleInputUsername1" placeholder="Dénomination de l'entreprise si nécessaire" name="denomination"
+                                    value="{{ old('denomination') }}">
+                                @error('denomination')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleFormControlSelect3">Type de client</label>
+                                <select name="type_client"
+                                    class="form-control form-control-sm @error('type_client') is-invalid @enderror"
+                                    id="exampleFormControlSelect3">
+                                    <option>Entreprise</option>
+                                    <option>Particulier</option>
+                                </select>
+                                @error('type_client')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputUsername1">Le code AnyxTech</label>
+                                <input type="text" class="form-control @error('code_anyx') is-invalid @enderror"
+                                    id="exampleInputUsername1" placeholder="Code AnyxTech" name="code_anyx"
+                                    value="{{ old('code_anyx') }}">
+                                @error('code_anyx')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputUsername1">Le code Befra</label>
+                                <input type="text" class="form-control @error('code_befra') is-invalid @enderror"
+                                    id="exampleInputUsername1" placeholder="Code Befra" name="code_befra"
+                                    value="{{ old('code_befra') }}">
+                                @error('code_befra')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                <button type="submit" class="btn btn-primary">Enregister</button>
+                            </div>
+                        </form>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                        <button type="button" class="btn btn-primary">Enregister</button>
-                    </div>
+                    
                 </div>
             </div>
         </div>

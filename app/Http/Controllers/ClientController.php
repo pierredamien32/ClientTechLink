@@ -11,7 +11,7 @@ class ClientController extends Controller
      */
     public function index()
     {
-        //
+        return view('dashboard.client.client');
     }
 
     /**
@@ -19,7 +19,7 @@ class ClientController extends Controller
      */
     public function create()
     {
-        return view('dashboard.client.clients');
+        
     }
 
     /**
@@ -27,7 +27,7 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
     }
 
     /**
