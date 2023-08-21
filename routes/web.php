@@ -3,6 +3,7 @@
 use App\Http\Controllers\ApController;
 use App\Http\Controllers\Auth\UserController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\EmplacementController;
 use App\Http\Controllers\SiteController;
 use Illuminate\Support\Facades\Route;
 
@@ -51,9 +52,17 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
 
         Route::prefix('clients')->group(function () {
             Route::get('/', [ClientController::class, 'index'])->name('client.index');
-            Route::post('/', [ClientController::class, 'store'])->name('client.store');
+            Route::post('/particuliers', [ClientController::class, 'FormParticulier'])->name('client.FormParticulier');
+            Route::post('/entreprises', [ClientController::class, 'FormEntreprise'])->name('client.FormEntreprise');
             Route::post('/update/{id}', [ClientController::class, 'update'])->name('client.update');
             Route::delete('/delete/{id}', [ClientController::class, 'destroy'])->name('client.delete');
+        });
+
+        Route::prefix('emplacements')->group(function () {
+            Route::get('/', [EmplacementController::class, 'index'])->name('emplacement.index');
+            Route::post('/', [EmplacementController::class, 'store'])->name('emplacement.store');
+            Route::post('/update/{id}', [EmplacementController::class, 'update'])->name('emplacement.update');
+            Route::delete('/delete/{id}', [EmplacementController::class, 'destroy'])->name('emplacement.delete');
         });
     });
 

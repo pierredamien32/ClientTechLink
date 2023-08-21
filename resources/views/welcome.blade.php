@@ -266,7 +266,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="">
+                                <a class="nav-link" href="{{ route('emplacement.index') }}">
                                     <span class="menu-title">Les emplacements</span>
                                     <i class="mdi mdi-radiobox-marked menu-icon"></i>
                                 </a>

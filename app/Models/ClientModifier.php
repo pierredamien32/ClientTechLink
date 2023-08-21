@@ -10,4 +10,8 @@ class ClientModifier extends Model
     use HasFactory;
 
     protected $table = 'client_modifiers';
+     protected $fillable = [
+        'user_id', 
+        'client_id'
+    ];
 }

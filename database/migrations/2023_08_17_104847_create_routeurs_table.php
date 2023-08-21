@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('modele');
             $table->string('passerelle', 15);
             $table->string('masque', 15);
-            $table->foreignId('emplacement_id')->constrained();
+            $table->foreignId('emplacement_id')->contrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

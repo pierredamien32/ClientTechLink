@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('aps', function (Blueprint $table) {
             $table->id();
             $table->string('nom_ap');
-            $table->foreignId('site_id')->constrained();
+            $table->foreignId('site_id')->contrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('nom_emplacement');
             $table->float('local_latitude', 8, 6);
             $table->float('local_longitude', 8, 6);
-            $table->foreignId('client_id')->constrained();
+            $table->foreignId('client_id')->contrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

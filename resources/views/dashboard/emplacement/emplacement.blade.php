@@ -57,6 +57,22 @@
             transform: translateY(-50%) scale(0.98);
         }
 
+        .transition-visible {
+            opacity: 1;
+            max-height: 100px;
+            /* Vous pouvez ajuster la valeur */
+            overflow: visible;
+            transition: opacity 0.3s, max-height 0.3s;
+        }
+
+        .transition-hidden {
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: opacity 0.3s, max-height 0.3s;
+        }
+
+
         /* Responsive */
         @media screen and (max-width: 500px) {
             .input-box {
@@ -84,8 +100,8 @@
         <div class="page-header">
             <h3 class="page-title">
                 <span class="page-title-icon bg-gradient-primary text-white me-2">
-                    <i class="mdi mdi-contacts menu-icon"></i>
-                </span> Utilisateurs
+                    <i class="mdi mdi-radiobox-marked menu-icon"></i>
+                </span> Emplacements
             </h3>
             <nav aria-label="breadcrumb">
                 <ul class="breadcrumb">
@@ -95,7 +111,7 @@
                 </ul>
             </nav>
         </div>
-        <div class="row">
+        {{-- <div class="row">
             <div class="col-md-4 stretch-card grid-margin">
                 <div class="card bg-gradient-danger card-img-holder text-white">
                     <div class="card-body">
@@ -105,7 +121,7 @@
                         </h4>
                         <h2 class="mb-5">{{ count($utilisateurs) }}</h2>
                         @if ($date)
-                            <h6 class="card-text">Mise à jour depuis le {{ $date->updated_at->format('d/m/y') }} à {{ $date->updated_at->format('H:i:s') }}</h6>
+                            <h6 class="card-text">Mise à jour depuis le {{ $date->updated_at->format('d/m/y') }}</h6>
                         @endif
                     </div>
                 </div>
@@ -132,12 +148,12 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <div class="row" style="margin-bottom: 20px; display: flex; justify-content:center; align-items:center;">
-            <form action="{{ route('user.index') }}" method="get" accept-charset="UTF-8" role="search">
+            <form action="{{ route('emplacement.index') }}" method="get" accept-charset="UTF-8" role="search">
                 <div class="input-box">
                     <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" placeholder="Rechercher un utilisateur..." name="search"
+                    <input type="text" placeholder="Rechercher un emplacement..." name="search"
                         value="{{ request()->search }}" />
                     <button class="button">Rechercher</button>
                 </div>
@@ -149,51 +165,66 @@
                 <div class="card">
                     <div class="card-body">
                         <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
-                            <h4 class="card-title">Liste des Utilisateurs</h4>
+                            <h4 class="card-title">Liste des Emplacements</h4>
 
                             <button type="button" data-bs-toggle="modal" data-bs-target="#modal-ajout"
-                                class="btn btn-block btn-lg btn-gradient-primary">+ Ajouter un utilisateur</button>
+                                class="btn btn-block btn-lg btn-gradient-primary">+ Ajouter un emplacement</button>
                         </div>
 
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th> Pseudo </th>
-                                        <th> Email </th>
-                                        <th> Type utilisateur</th>
-                                        <th> Dernière connexion</th>
+                                        <th> Emplacement </th>
+                                        <th> Localistion de la latitude </th>
+                                        <th> Localistion de la longitude</th>
+                                        <th> Associé au client </th>
                                         <th> Action </th>
                                     </tr>
                                 </thead>
-                                @foreach ($utilisateurs as $user)
+                                @foreach ($emplacements as $emplacement)
                                     <tbody>
                                         <tr>
                                             <td>
-                                                {{ $user->pseudo }}
+                                                {{ $emplacement->nom_emplacement }}
                                             </td>
-                                            <td> {{ $user->email }} </td>
+                                            <td> {{ $emplacement->local_latitude }} </td>
                                             <td>
-                                                {{ $user->type_user }}
+                                                {{ $emplacement->local_longitude }}
                                             </td>
-                                            <td>le 12/08/2023</td>
+                                            @if ($emplacement->client->nom === "--------")
+
+                                            @else
+                                                <td>
+                                                    {{ $emplacement->client->nom }}
+                                                </td>
+                                            @endif
+
+                                            @if ($emplacement->client->denomination === "--------")
+                                                
+                                            @else
+                                                <td>
+                                                    {{ $emplacement->client->denomination }}
+                                                </td>
+                                            @endif
                                             <td>
                                                 {{-- <a href="">
                                                 <span class="page-title-icon bg-gradient-success text-white me-2 tail">
                                                     <i class="fa-solid fa-list"></i>
                                                 </span>
                                             </a> --}}
-                                                <a href="#edit{{ $user->id }}"
+                                                <a href="#edit{{ $emplacement->id }}"
                                                     class="page-title-icon bg-primary text-white me-2 tail" type="button"
                                                     data-bs-toggle="modal" style="border: none;">
                                                     <i class="fa-solid fa-pen-to-square"></i>
                                                 </a>
-                                                <a href="#delete{{ $user->id }}" type="button" data-bs-toggle="modal"
+                                                <a href="#delete{{ $emplacement->id }}" type="button"
+                                                    data-bs-toggle="modal"
                                                     class="page-title-icon bg-danger text-white me-2 tail"
                                                     style="border: none;">
                                                     <i class="fa-solid fa-trash"></i>
                                                 </a>
-                                                @include('dashboard.user.action')
+                                                @include('dashboard.emplacement.action')
                                             </td>
                                         </tr>
                                     </tbody>
@@ -201,11 +232,11 @@
                             </table>
                         </div>
                         <div style="margin-top: 20px;"></div>
-                        @if (count($utilisateurs) > 0)
-                            {{ $utilisateurs->links() }}
+                        @if (count($emplacements) > 0)
+                            {{ $emplacements->links() }}
                         @else
                             <div class="d-flex justify-content-center align-items-center">
-                                <p class="card-description">Pas d'utilisateurs.</p>
+                                <p class="card-description">Pas d'emplacements.</p>
                             </div>
                         @endif
                     </div>
@@ -238,58 +269,89 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="staticBackdropLabel">Ajout d'un utilisateur</h5>
+                        <h5 class="modal-title" id="staticBackdropLabel">Ajout d'un emplacement</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{ route('user.store') }}" method="POST" class="forms-sample">
+                        <form action="{{ route('emplacement.store') }}" method="POST" class="forms-sample">
                             @csrf
                             <div class="form-group">
-                                <label for="exampleInputUsername1">Pseudo</label>
-                                <input type="text" class="form-control @error('pseudo') is-invalid @enderror"
-                                    id="exampleInputUsername1" placeholder="Username" name="pseudo"
-                                    value="{{ old('pseudo') }}">
-                                @error('pseudo')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Email</label>
-                                <input type="email" name="email"
-                                    class="form-control @error('email') is-invalid @enderror" id="exampleInputEmail1"
-                                    placeholder="Email" value="{{ old('email') }}">
-                                @error('email')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleFormControlSelect3">Type d'utilisateur</label>
-                                <select name="type_user"
-                                    class="form-control form-control-sm @error('type_user') is-invalid @enderror"
-                                    id="exampleFormControlSelect3">
-                                    <option>Super Admin</option>
-                                    <option>Admin</option>
-                                    <option>Simple Utilisateur</option>
+                                <label for="exampleInputUsername1">Emplacement</label>
+                                {{-- <input type="text" class="form-control @error('nom_emplacement') is-invalid @enderror"
+                                    id="exampleInputUsername1" placeholder="Nom du emplacement" name="nom_emplacement"
+                                    value="{{ old('nom_emplacement') }}"> --}}
+                                <select name="nom_emplacement"
+                                    class="form-control form-control-sm @error('nom_emplacement') is-invalid @enderror"
+                                    >
+                                    <option>Bureau</option>
+                                    <option>Maison</option>
                                 </select>
-                                @error('type_user')
+                                @error('nom_emplacement')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputPassword1">Mot de passe</label>
-                                <input type="password" name="password"
-                                    class="form-control @error('password') is-invalid @enderror"
-                                    id="exampleInputPassword1" placeholder="Password">
-                                @error('password')
+                                <label for="exampleInputEmail1">Localisation latitude</label>
+                                <input type="number" id="floatInput" name="local_latitude" step="any"
+                                    class="form-control @error('local_latitude') is-invalid @enderror"
+                                    id="exampleInputEmail1" placeholder="Localisation latitude"
+                                    value="{{ old('local_latitude') }}">
+                                @error('local_latitude')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputConfirmPassword1">Confirmer le mot de passe</label>
-                                <input type="password" name="password_confirmation"
-                                    class="form-control @error('password_confirmation') is-invalid @enderror"
-                                    id="exampleInputConfirmPassword1" placeholder="Confirm password">
-                                @error('password_confirmation')
+                                <label for="exampleInputEmail1">Localisation longitude</label>
+                                <input type="number" id="floatInput" name="local_longitude" step="any"
+                                    class="form-control @error('local_longitude') is-invalid @enderror"
+                                    id="exampleInputEmail1" placeholder="Localisation longitude"
+                                    value="{{ old('local_longitude') }}">
+                                @error('local_longitude')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleFormControlSelect3">Type du client</label>
+                                <select class="form-control form-control-sm" id="exampleFormControlSelect3"
+                                    onchange="handleClientTypeChange()">
+                                    <option>Particulier</option>
+                                    <option>Entreprise</option>
+                                </select>
+                            </div>
+                            <div class="form-group transition-hidden" id="particulierSection">
+                                <label for="exampleFormControlSelect3">Associé au client</label>
+                                <select name="nom_client" 
+                                    class="form-control form-control-sm @error('nom_client') is-invalid @enderror"
+                                    id="exampleFormControlSelect3">
+                                    <option></option>
+                                    @foreach ($clients as $client)
+                                        @if ( $client->nom == '--------' )
+                                            
+                                        @else
+                                            <option>{{ $client->nom }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                                @error('nom_client')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group transition-hidden" id="entrepriseSection">
+
+                                <label for="exampleFormControlSelect3">Associé au client</label>
+                                <select name="denomination"
+                                    class="form-control form-control-sm @error('denomination') is-invalid @enderror"
+                                    id="exampleFormControlSelect3">
+                                    <option></option>
+                                    @foreach ($clients as $client)
+                                        @if ( $client->denomination == '--------' )
+                                            
+                                        @else
+                                            <option>{{ $client->denomination }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                                @error('denomination')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -305,4 +367,27 @@
         </div>
     </div>
     {{-- Fin du Modal boite d'Ajout --}}
+
+    <script>
+        function handleClientTypeChange() {
+            var selectedOption = document.getElementById("exampleFormControlSelect3").value;
+            var particulierSection = document.getElementById("particulierSection");
+            var entrepriseSection = document.getElementById("entrepriseSection");
+
+            if (selectedOption === "Particulier") {
+                particulierSection.classList.remove("transition-hidden");
+                particulierSection.classList.add("transition-visible");
+                entrepriseSection.classList.remove("transition-visible");
+                entrepriseSection.classList.add("transition-hidden");
+            } else if (selectedOption === "Entreprise") {
+                entrepriseSection.classList.remove("transition-hidden");
+                entrepriseSection.classList.add("transition-visible");
+                particulierSection.classList.remove("transition-visible");
+                particulierSection.classList.add("transition-hidden");
+            }
+        }
+
+        // Appel initial pour s'assurer que la bonne section est affichée selon la valeur par défaut
+        handleClientTypeChange();
+    </script>
 @endsection

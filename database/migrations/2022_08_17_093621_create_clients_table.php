@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('type_client');
             $table->string('code_anyx');
             $table->string('code_befra');
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('user_id')->contrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

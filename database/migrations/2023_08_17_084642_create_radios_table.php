@@ -18,8 +18,8 @@ return new class extends Migration
             $table->integer('signal');
             $table->string('passerelle', 15);
             $table->string('masque', 15);
-            $table->foreignId('ap_id')->constrained();
-            $table->foreignId('emplacement_id')->constrained();
+            $table->foreignId('ap_id')->contrained()->onDelete('cascade');
+            $table->foreignId('emplacement_id')->contrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

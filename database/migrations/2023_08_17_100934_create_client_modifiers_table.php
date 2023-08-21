@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('client_modifiers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained();
-            $table->foreignId('client_id')->constrained();
+            $table->foreignId('user_id')->contrained()->onDelete('cascade');
+            $table->foreignId('client_id')->contrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
