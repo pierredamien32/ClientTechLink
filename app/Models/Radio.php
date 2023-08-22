@@ -15,7 +15,8 @@ class Radio extends Model
         'signal',
         'passerelle',
         'masque',
-        'ap_id'
+        'ap_id',
+        'emplacement_id'
     ];
 
     public function ap(){

@@ -100,8 +100,8 @@
         <div class="page-header">
             <h3 class="page-title">
                 <span class="page-title-icon bg-gradient-primary text-white me-2">
-                    <i class="mdi mdi-radiobox-marked menu-icon"></i>
-                </span> Emplacements
+                    <i class="mdi mdi-signal menu-icon"></i>
+                </span> Radios
             </h3>
             <nav aria-label="breadcrumb">
                 <ul class="breadcrumb">
@@ -150,10 +150,10 @@
             </div>
         </div> --}}
         <div class="row" style="margin-bottom: 20px; display: flex; justify-content:center; align-items:center;">
-            <form action="{{ route('emplacement.index') }}" method="get" accept-charset="UTF-8" role="search">
+            <form action="{{ route('radio.index') }}" method="get" accept-charset="UTF-8" role="search">
                 <div class="input-box">
                     <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" placeholder="Rechercher un emplacement..." name="search"
+                    <input type="text" placeholder="Rechercher une radio..." name="search"
                         value="{{ request()->search }}" />
                     <button class="button">Rechercher</button>
                 </div>
@@ -165,66 +165,73 @@
                 <div class="card">
                     <div class="card-body">
                         <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
-                            <h4 class="card-title">Liste des Emplacements</h4>
+                            <h4 class="card-title">Liste des Radios</h4>
 
                             <button type="button" data-bs-toggle="modal" data-bs-target="#modal-ajout"
-                                class="btn btn-block btn-lg btn-gradient-primary">+ Ajouter un emplacement</button>
+                                class="btn btn-block btn-lg btn-gradient-primary">+ Ajouter une radio</button>
                         </div>
 
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th> Emplacement </th>
-                                        <th> Localistion de la latitude </th>
-                                        <th> Localistion de la longitude</th>
+                                        <th> Nom de la radio </th>
+                                        <th> Adresse de la radio </th>
+                                        <th> Signal </th>
+                                        <th> Passerelle </th>
+                                        <th> Masque </th>
+                                        <th> Associé à l'Ap </th>
                                         <th> Associé au client </th>
                                         <th> Action </th>
                                     </tr>
                                 </thead>
-                                @foreach ($emplacements as $emplacement)
+                                @foreach ($radios as $radio)
                                     <tbody>
                                         <tr>
                                             <td>
-                                                {{ $emplacement->nom_emplacement }}
+                                                {{ $radio->nom_radio }}
                                             </td>
-                                            <td> {{ $emplacement->local_latitude }} </td>
+                                            <td> {{ $radio->adresse_radio }} </td>
                                             <td>
-                                                {{ $emplacement->local_longitude }}
+                                                {{ $radio->signal }}
                                             </td>
-                                            @if ($emplacement->client->nom === "--------")
+                                            <td>
+                                                {{ $radio->passerelle }}
+                                            </td>
+                                            <td>
+                                                {{ $radio->masque }}
+                                            </td>
 
+                                            <td>
+                                                {{ $radio->ap->nom_ap }}
+                                            </td>
+
+                                            @if ($radio->emplacement->client->nom === '--------')
                                             @else
                                                 <td>
-                                                    {{ $emplacement->client->nom }}
+                                                    {{ $radio->emplacement->client->nom }}
                                                 </td>
                                             @endif
 
-                                            @if ($emplacement->client->denomination === "--------")
-                                                
+                                            @if ($radio->emplacement->client->denomination === '--------')
                                             @else
                                                 <td>
-                                                    {{ $emplacement->client->denomination }}
+                                                    {{ $radio->emplacement->client->denomination }}
                                                 </td>
                                             @endif
+
                                             <td>
-                                                {{-- <a href="">
-                                                <span class="page-title-icon bg-gradient-success text-white me-2 tail">
-                                                    <i class="fa-solid fa-list"></i>
-                                                </span>
-                                            </a> --}}
-                                                <a href="#edit{{ $emplacement->id }}"
+                                                <a href="#edit{{ $radio->id }}"
                                                     class="page-title-icon bg-primary text-white me-2 tail" type="button"
                                                     data-bs-toggle="modal" style="border: none;">
                                                     <i class="fa-solid fa-pen-to-square"></i>
                                                 </a>
-                                                <a href="#delete{{ $emplacement->id }}" type="button"
-                                                    data-bs-toggle="modal"
+                                                <a href="#delete{{ $radio->id }}" type="button" data-bs-toggle="modal"
                                                     class="page-title-icon bg-danger text-white me-2 tail"
                                                     style="border: none;">
                                                     <i class="fa-solid fa-trash"></i>
                                                 </a>
-                                                @include('dashboard.emplacement.action')
+                                                @include('dashboard.radio.action')
                                             </td>
                                         </tr>
                                     </tbody>
@@ -232,11 +239,11 @@
                             </table>
                         </div>
                         <div style="margin-top: 20px;"></div>
-                        @if (count($emplacements) > 0)
-                            {{ $emplacements->links() }}
+                        @if (count($radios) > 0)
+                            {{ $radios->links() }}
                         @else
                             <div class="d-flex justify-content-center align-items-center">
-                                <p class="card-description">Pas d'emplacements.</p>
+                                <p class="card-description">Pas de radio.</p>
                             </div>
                         @endif
                     </div>
@@ -273,85 +280,122 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{ route('emplacement.store') }}" method="POST" class="forms-sample">
+                        <form action="{{ route('radio.store') }}" method="POST" class="forms-sample">
                             @csrf
                             <div class="form-group">
-                                <label for="exampleInputUsername1">Emplacement</label>
-                                {{-- <input type="text" class="form-control @error('nom_emplacement') is-invalid @enderror"
-                                    id="exampleInputUsername1" placeholder="Nom du emplacement" name="nom_emplacement"
-                                    value="{{ old('nom_emplacement') }}"> --}}
-                                <select name="nom_emplacement" id="exampleFormControlSelect3"
-                                    class="form-control form-control-sm @error('nom_emplacement') is-invalid @enderror"
-                                    onchange="handleClientTypeChange()">
-                                    <option>Maison</option>
-                                    <option>Bureau</option>
+                                <label for="exampleInputUsername1">Nom de la radio</label>
+                                <input type="text" class="form-control @error('nom_radio') is-invalid @enderror"
+                                    id="exampleInputUsername1" placeholder="Nom de la radio" name="nom_radio"
+                                    value="{{ old('nom_radio') }}">
+                                @error('nom_radio')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Adresse de la radio</label>
+                                <input type="text" id="floatInput" name="adresse_radio" step="any"
+                                    class="form-control @error('adresse_radio') is-invalid @enderror"
+                                    id="exampleInputEmail1" placeholder="Adresse de la radio"
+                                    value="{{ old('adresse_radio') }}">
+                                @error('adresse_radio')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Signal de la radio</label>
+                                <input type="number" id="floatInput" name="signal" step="any"
+                                    class="form-control @error('signal') is-invalid @enderror" id="exampleInputEmail1"
+                                    placeholder="Signal" value="{{ old('signal') }}">
+                                @error('signal')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Passerelle de la radio</label>
+                                <input type="text" id="floatInput" name="passerelle" step="any"
+                                    class="form-control @error('passerelle') is-invalid @enderror" id="exampleInputEmail1"
+                                    placeholder="Passerelle de la radio" value="{{ old('passerelle') }}">
+                                @error('passerelle')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Adresse masque de la radio</label>
+                                <input type="text" id="floatInput" name="masque" step="any"
+                                    class="form-control @error('masque') is-invalid @enderror" id="exampleInputEmail1"
+                                    placeholder="masque de la radio" value="{{ old('masque') }}">
+                                @error('masque')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleFormControlSelect3">Associé à l'ap</label>
+                                <select name="nom_ap"
+                                    class="form-control form-control-sm @error('nom_ap') is-invalid @enderror">
+                                    @foreach ($aps as $ap)
+                                        <option>{{ $ap->nom_ap }}</option>
+                                    @endforeach
                                 </select>
-                                @error('nom_emplacement')
+                                @error('nom_ap')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Localisation latitude</label>
-                                <input type="number" id="floatInput" name="local_latitude" step="any"
-                                    class="form-control @error('local_latitude') is-invalid @enderror"
-                                    id="exampleInputEmail1" placeholder="Localisation latitude"
-                                    value="{{ old('local_latitude') }}">
-                                @error('local_latitude')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Localisation longitude</label>
-                                <input type="number" id="floatInput" name="local_longitude" step="any"
-                                    class="form-control @error('local_longitude') is-invalid @enderror"
-                                    id="exampleInputEmail1" placeholder="Localisation longitude"
-                                    value="{{ old('local_longitude') }}">
-                                @error('local_longitude')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            {{-- <div class="form-group">
                                 <label for="exampleFormControlSelect3">Type du client</label>
                                 <select class="form-control form-control-sm" id="exampleFormControlSelect3"
                                     onchange="handleClientTypeChange()">
-                                    <option>Particulier</option>
-                                    <option>Entreprise</option>
+                                    <option>Bureau</option> {{-- Particulier --}}
+                                    <option>Maison</option> {{-- Entreprise --}}
                                 </select>
-                            </div> --}}
-                            <div class="form-group transition-hidden" id="particulierSection">
-                                <label for="exampleFormControlSelect3">Associé au client</label>
-                                <select name="nom_client" 
-                                    class="form-control form-control-sm @error('nom_client') is-invalid @enderror"
-                                    id="exampleFormControlSelect3">
-                                    <option></option>
-                                    @foreach ($clients as $client)
-                                        @if ( $client->nom == '--------' )
-                                            
-                                        @else
-                                            <option>{{ $client->nom }}</option>
-                                        @endif
-                                    @endforeach
-                                </select>
-                                @error('nom_client')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
                             </div>
                             <div class="form-group transition-hidden" id="entrepriseSection">
-
                                 <label for="exampleFormControlSelect3">Associé au client</label>
                                 <select name="denomination"
                                     class="form-control form-control-sm @error('denomination') is-invalid @enderror"
                                     id="exampleFormControlSelect3">
                                     <option></option>
-                                    @foreach ($clients as $client)
-                                        @if ( $client->denomination == '--------' )
-                                            
-                                        @else
-                                            <option>{{ $client->denomination }}</option>
+                                    @php
+                                        $addedValues = [];
+                                    @endphp
+                                    @foreach ($client_bureaux as $bureau)
+                                        @php
+                                            $valueToAdd = $bureau->nom == '--------' ? $bureau->denomination : $bureau->nom;
+                                        @endphp
+
+                                        @if (!in_array($valueToAdd, $addedValues))
+                                            <option>{{ $valueToAdd }}</option>
+                                            <?php $addedValues[] = $valueToAdd; ?>
                                         @endif
                                     @endforeach
                                 </select>
                                 @error('denomination')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group transition-hidden" id="particulierSection">
+                                <label for="exampleFormControlSelect3">Associé au client</label>
+                                <select name="nom_client"
+                                    class="form-control form-control-sm @error('nom_client') is-invalid @enderror"
+                                    id="exampleFormControlSelect3">
+                                    <option></option>
+                                    @php
+                                        $options = []; // Tableau pour stocker les options déjà ajoutées
+                                    @endphp
+
+                                    @foreach ($client_maisons as $maison)
+                                        @php
+                                            $optionValue = $maison->denomination == '--------' ? $maison->nom : $maison->denomination;
+                                        @endphp
+
+                                        @if (!in_array($optionValue, $options))
+                                            <option>{{ $optionValue }}</option>
+                                            @php
+                                                $options[] = $optionValue; // Ajouter l'option au tableau des options
+                                            @endphp
+                                        @endif
+                                    @endforeach
+                                </select>
+                                @error('nom_client')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>

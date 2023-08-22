@@ -272,7 +272,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="">
+                                <a class="nav-link" href="{{ route('radio.index') }}">
                                     <span class="menu-title">Les radios</span>
                                     <i class="mdi mdi-signal menu-icon"></i>
                                 </a>

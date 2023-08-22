@@ -4,6 +4,7 @@ use App\Http\Controllers\ApController;
 use App\Http\Controllers\Auth\UserController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\EmplacementController;
+use App\Http\Controllers\RadioController;
 use App\Http\Controllers\SiteController;
 use Illuminate\Support\Facades\Route;
 
@@ -29,6 +30,7 @@ Route::post('/login', [UserController::class, 'loginUsers'])->name('loginUsers')
 // Route accessible que si l'utilisateur est connecté
 Route::middleware(['auth', 'auth.session'])->group(function () {
     Route::prefix('dashboard')->group(function () {
+
         Route::prefix('utilisateurs')->group(function () {
             Route::get('/', [UserController::class, 'index'])->name('user.index');
             Route::post('/', [UserController::class, 'store'])->name('user.store');
@@ -64,8 +66,16 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
             Route::post('/update/{id}', [EmplacementController::class, 'update'])->name('emplacement.update');
             Route::delete('/delete/{id}', [EmplacementController::class, 'destroy'])->name('emplacement.delete');
         });
+
+        Route::prefix('radios')->group(function () {
+            Route::get('/', [RadioController::class, 'index'])->name('radio.index');
+            Route::post('/', [RadioController::class, 'store'])->name('radio.store');
+            Route::post('/update/{id}', [RadioController::class, 'update'])->name('radio.update');
+            Route::delete('/delete/{id}', [RadioController::class, 'destroy'])->name('radio.delete');
+        });
+
     });
 
-
     Route::post('/logout', [Usercontroller::class, 'logout'])->name('logout');
+    
 });

@@ -81,7 +81,7 @@ class UserController extends Controller
                         'lien' => 'http://127.0.0.1:8000/'
                     ]);
 
-                    // Mail::to($email)->send(new ConnecteMail($user));
+                    Mail::to($email)->send(new ConnecteMail($user));
                 }
 
                 if ($type_user === "Admin") {

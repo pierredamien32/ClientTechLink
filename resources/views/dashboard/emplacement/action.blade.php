@@ -55,16 +55,16 @@
                                 >
                                 <option value="">{{$emplacement->client->denomination}}</option>
                                 @foreach ($clients as $client)
-                                    @if ($client->denomination == $emplacement->client->denomination)
+                                    @if ($client->denomination == $emplacement->client->denomination || $client->denomination =='--------')
                                         
                                     @else
                                         <option>{{ $client->denomination }}</option>
                                     @endif
                                 @endforeach
                             </select>
-                            @error('denomination')
+                            {{-- @error('denomination')
                                 <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
+                            @enderror --}}
                         </div>
                     @else
                     {{-- {{$emplacement->client->nom}} --}}
@@ -76,10 +76,10 @@
                                >
                                 <option value="">{{$emplacement->client->nom}}</option>
                                 @foreach ($clients as $client)
-                                    @if ($client->nom_client == $emplacement->client->nom)
+                                    @if ($client->nom == $emplacement->client->nom || $client->nom =='--------')
                                         
                                     @else
-                                        <option>{{ $client->nom_client }}</option>
+                                        <option>{{ $client->nom }}</option>
                                     @endif
                                 @endforeach
                             </select>
