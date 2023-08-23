@@ -100,8 +100,8 @@
         <div class="page-header">
             <h3 class="page-title">
                 <span class="page-title-icon bg-gradient-primary text-white me-2">
-                    <i class="mdi mdi-signal menu-icon"></i>
-                </span> Radios
+                    <i class="mdi mdi-inbox menu-icon"></i>
+                </span> Routeurs
             </h3>
             <nav aria-label="breadcrumb">
                 <ul class="breadcrumb">
@@ -150,10 +150,10 @@
             </div>
         </div> --}}
         <div class="row" style="margin-bottom: 20px; display: flex; justify-content:center; align-items:center;">
-            <form action="{{ route('radio.index') }}" method="get" accept-charset="UTF-8" role="search">
+            <form action="{{ route('routeur.index') }}" method="get" accept-charset="UTF-8" role="search">
                 <div class="input-box">
                     <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" placeholder="Rechercher une radio..." name="search"
+                    <input type="text" placeholder="Rechercher un routeur..." name="search"
                         value="{{ request()->search }}" />
                     <button class="button">Rechercher</button>
                 </div>
@@ -165,73 +165,72 @@
                 <div class="card">
                     <div class="card-body">
                         <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
-                            <h4 class="card-title">Liste des Radios</h4>
+                            <h4 class="card-title">Liste des Routeurs</h4>
 
                             <button type="button" data-bs-toggle="modal" data-bs-target="#modal-ajout"
-                                class="btn btn-block btn-lg btn-gradient-primary">+ Ajouter une radio</button>
+                                class="btn btn-block btn-lg btn-gradient-primary">+ Ajouter un routeur</button>
                         </div>
 
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th> Nom de la radio </th>
-                                        <th> Adresse de la radio </th>
-                                        <th> Signal </th>
+                                        <th> Nom du routeur </th>
+                                        <th> Adresse du routeur </th>
+                                        <th> La marque </th>
+                                        <th> Le modèle </th>
                                         <th> Passerelle </th>
                                         <th> Masque </th>
-                                        <th> Associé à l'Ap </th>
                                         <th> Associé au client </th>
                                         <th> Action </th>
                                     </tr>
                                 </thead>
-                                @foreach ($radios as $radio)
+                                @foreach ($routeurs as $routeur)
                                     <tbody>
                                         <tr>
                                             <td>
-                                                {{ $radio->nom_radio }}
+                                                {{ $routeur->nom_routeur }}
                                             </td>
-                                            <td> {{ $radio->adresse_radio }} </td>
+                                            <td> {{ $routeur->adresse_routeur }} </td>
                                             <td>
-                                                {{ $radio->signal }}
-                                            </td>
-                                            <td>
-                                                {{ $radio->passerelle }}
+                                                {{ $routeur->marque }}
                                             </td>
                                             <td>
-                                                {{ $radio->masque }}
+                                                {{ $routeur->modele }}
+                                            </td>
+                                            <td>
+                                                {{ $routeur->passerelle }}
+                                            </td>
+                                            <td>
+                                                {{ $routeur->masque }}
                                             </td>
 
-                                            <td>
-                                                {{ $radio->ap->nom_ap }}
-                                            </td>
-
-                                            @if ($radio->emplacement->client->nom === '--------')
+                                            @if ($routeur->emplacement->client->nom === '--------')
                                             @else
                                                 <td>
-                                                    {{ $radio->emplacement->client->nom }}
+                                                    {{ $routeur->emplacement->client->nom }}
                                                 </td>
                                             @endif
 
-                                            @if ($radio->emplacement->client->denomination === '--------')
+                                            @if ($routeur->emplacement->client->denomination === '--------')
                                             @else
                                                 <td>
-                                                    {{ $radio->emplacement->client->denomination }}
+                                                    {{ $routeur->emplacement->client->denomination }}
                                                 </td>
                                             @endif
 
                                             <td>
-                                                <a href="#edit{{ $radio->id }}"
+                                                <a href="#edit{{ $routeur->id }}"
                                                     class="page-title-icon bg-primary text-white me-2 tail" type="button"
                                                     data-bs-toggle="modal" style="border: none;">
                                                     <i class="fa-solid fa-pen-to-square"></i>
                                                 </a>
-                                                <a href="#delete{{ $radio->id }}" type="button" data-bs-toggle="modal"
+                                                <a href="#delete{{ $routeur->id }}" type="button" data-bs-toggle="modal"
                                                     class="page-title-icon bg-danger text-white me-2 tail"
                                                     style="border: none;">
                                                     <i class="fa-solid fa-trash"></i>
                                                 </a>
-                                                @include('dashboard.radio.action')
+                                                @include('dashboard.routeur.action')
                                             </td>
                                         </tr>
                                     </tbody>
@@ -239,11 +238,11 @@
                             </table>
                         </div>
                         <div style="margin-top: 20px;"></div>
-                        @if (count($radios) > 0)
-                            {{ $radios->links() }}
+                        @if (count($routeurs) > 0)
+                            {{ $routeurs->links() }}
                         @else
                             <div class="d-flex justify-content-center align-items-center">
-                                <p class="card-description">Pas de radio.</p>
+                                <p class="card-description">Pas de routeur.</p>
                             </div>
                         @endif
                     </div>
@@ -276,42 +275,51 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="staticBackdropLabel">Ajout d'une radio</h5>
+                        <h5 class="modal-title" id="staticBackdropLabel">Ajout d'un routeur</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{ route('radio.store') }}" method="POST" class="forms-sample">
+                        <form action="{{ route('routeur.store') }}" method="POST" class="forms-sample">
                             @csrf
                             <div class="form-group">
-                                <label for="exampleInputUsername1">Nom de la radio</label>
-                                <input type="text" class="form-control @error('nom_radio') is-invalid @enderror"
-                                    id="exampleInputUsername1" placeholder="Nom de la radio" name="nom_radio"
-                                    value="{{ old('nom_radio') }}">
-                                @error('nom_radio')
+                                <label for="exampleInputUsername1">Nom du routeur</label>
+                                <input type="text" class="form-control @error('nom_routeur') is-invalid @enderror"
+                                    id="exampleInputUsername1" placeholder="Nom de la routeur" name="nom_routeur"
+                                    value="{{ old('nom_routeur') }}">
+                                @error('nom_routeur')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Adresse de la radio</label>
-                                <input type="text" id="floatInput" name="adresse_radio" step="any"
-                                    class="form-control @error('adresse_radio') is-invalid @enderror"
-                                    id="exampleInputEmail1" placeholder="Adresse de la radio"
-                                    value="{{ old('adresse_radio') }}">
-                                @error('adresse_radio')
+                                <label for="exampleInputEmail1">Adresse du routeur</label>
+                                <input type="text" id="floatInput" name="adresse_routeur" step="any"
+                                    class="form-control @error('adresse_routeur') is-invalid @enderror"
+                                    id="exampleInputEmail1" placeholder="Adresse de la routeur"
+                                    value="{{ old('adresse_routeur') }}">
+                                @error('adresse_routeur')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Signal de la radio</label>
-                                <input type="number" id="floatInput" name="signal" step="any"
-                                    class="form-control @error('signal') is-invalid @enderror" id="exampleInputEmail1"
-                                    placeholder="Signal" value="{{ old('signal') }}">
-                                @error('signal')
+                                <label for="exampleInputEmail1">La marque du routeur</label>
+                                <input type="text" id="floatInput" name="marque" 
+                                    class="form-control @error('marque') is-invalid @enderror" id="exampleInputEmail1"
+                                    placeholder="marque" value="{{ old('marque') }}">
+                                @error('marque')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Passerelle de la radio</label>
+                                <label for="exampleInputEmail1">Le modèle du routeur</label>
+                                <input type="text" id="floatInput" name="modele" 
+                                    class="form-control @error('modele') is-invalid @enderror" id="exampleInputEmail1"
+                                    placeholder="modele" value="{{ old('modele') }}">
+                                @error('modele')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Passerelle du routeur</label>
                                 <input type="text" id="floatInput" name="passerelle" step="any"
                                     class="form-control @error('passerelle') is-invalid @enderror" id="exampleInputEmail1"
                                     placeholder="Passerelle de la radio" value="{{ old('passerelle') }}">
@@ -320,23 +328,11 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Adresse masque de la radio</label>
+                                <label for="exampleInputEmail1">Adresse masque du routeur</label>
                                 <input type="text" id="floatInput" name="masque" step="any"
                                     class="form-control @error('masque') is-invalid @enderror" id="exampleInputEmail1"
                                     placeholder="masque de la radio" value="{{ old('masque') }}">
                                 @error('masque')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleFormControlSelect3">Associé à l'ap</label>
-                                <select name="nom_ap"
-                                    class="form-control form-control-sm @error('nom_ap') is-invalid @enderror">
-                                    @foreach ($aps as $ap)
-                                        <option>{{ $ap->nom_ap }}</option>
-                                    @endforeach
-                                </select>
-                                @error('nom_ap')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>

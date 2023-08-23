@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Ap;
 use App\Models\Client;
-use App\Models\Radio;
+use App\Models\Routeur;
 use Illuminate\Http\Request;
 
-class RadioController extends Controller
+class RouteurController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,15 +16,13 @@ class RadioController extends Controller
         $search = $request->search;
 
         if ($search) {
-            $radios = Radio::query()
-                ->where('nom_radio', 'LIKE', '%' . $search . '%')
+            $routeurs = Routeur::query()
+                ->where('nom_routeur', 'LIKE', '%' . $search . '%')
                 ->paginate(10);
         } else {
-            $radios = Radio::latest()->paginate(10);
+            $routeurs = Routeur::latest()->paginate(10);
             // $date = $radios->first();
         }
-
-        $aps = Ap::all();
 
         $client_maisons = Client::join('emplacements', 'clients.id', '=', 'emplacements.client_id')
             ->where('nom_emplacement', '=', 'Maison')
@@ -38,7 +35,7 @@ class RadioController extends Controller
         // $clients = Client::all();
 
         // $date = $radios->first();
-        return view('dashboard.radio.radio', compact('radios', 'aps', 'client_maisons', 'client_bureaux'));
+        return view('dashboard.routeur.routeur', compact('routeurs', 'client_maisons', 'client_bureaux'));
     }
 
     /**
@@ -55,29 +52,24 @@ class RadioController extends Controller
     public function store(Request $request)
     {
         $reponse = $request->validate([
-            'nom_radio' => 'required|string',
-            'adresse_radio' => 'required',
-            'signal' => 'required',
+            'nom_routeur' => 'required|string',
+            'adresse_routeur' => 'required',
+            'marque' => 'required',
+            'modele' => 'required',
             'passerelle' => 'required',
-            'masque' => 'required',
-            'nom_ap' => 'required'
+            'masque' => 'required'
         ]);
 
-        // dd($request->nom_ap);
-
-        $nom_radio = $request->nom_radio;
-        $radio = Radio::where('nom_radio', $nom_radio)->first();
-        if ($radio) {
+        $nom_routeur = $request->nom_routeur;
+        $routeur = Routeur::where('nom_routeur', $nom_routeur)->first();
+        if ($routeur) {
             // L'utilisateur existe déjà dans la base de données
             // Gérer l'erreur ou afficher un message d'erreur approprié
 
-            return redirect()->back()->withErrors(['nom_radio' => 'Cette radio existe déjà.'])->withInput();
+            return redirect()->back()->withErrors(['nom_routeur' => 'Ce routeur existe déjà.'])->withInput();
         } else {
 
             if ($request->denomination) {
-
-                $ap_id = Ap::where('aps.nom_ap', $request->nom_ap)
-                    ->get('aps.id');
 
                 $emplacement_denomination_id = Client::join('emplacements', 'clients.id', '=', 'emplacements.client_id')
                     ->where('denomination', '=', $request->denomination)
@@ -85,21 +77,19 @@ class RadioController extends Controller
 
                 // dd('Ok '.$emplacement_denomination_id);
 
-                $radio = Radio::create([
-                    'nom_radio' => $nom_radio,
-                    'adresse_radio' => $request->adresse_radio,
-                    'signal' => $request->signal,
+                $routeur = Routeur::create([
+                    'nom_routeur' => $nom_routeur,
+                    'adresse_routeur' => $request->adresse_routeur,
+                    'marque' => $request->marque,
+                    'modele' => $request->modele,
                     'passerelle' => $request->passerelle,
                     'masque' => $request->masque,
-                    'ap_id' => $ap_id[0]->id,
                     'emplacement_id' => $emplacement_denomination_id[0]->id,
                 ]);
-                return redirect()->route('radio.index');
+                return redirect()->route('routeur.index');
             }
 
             if ($request->nom_client) {
-                $ap_id = Ap::where('aps.nom_ap', $request->nom_ap)
-                    ->get('aps.id');
 
                 $emplacement_nom_id = Client::join('emplacements', 'clients.id', '=', 'emplacements.client_id')
                     ->where('nom', '=', $request->nom_client)
@@ -107,16 +97,16 @@ class RadioController extends Controller
 
                 // dd('Ok '.$emplacement_nom_id);
 
-                $radio = Radio::create([
-                    'nom_radio' => $nom_radio,
-                    'adresse_radio' => $request->adresse_radio,
-                    'signal' => $request->signal,
+                $routeur = Routeur::create([
+                    'nom_routeur' => $nom_routeur,
+                    'adresse_routeur' => $request->adresse_routeur,
+                    'marque' => $request->marque,
+                    'modele' => $request->modele,
                     'passerelle' => $request->passerelle,
                     'masque' => $request->masque,
-                    'ap_id' => $ap_id[0]->id,
                     'emplacement_id' => $emplacement_nom_id[0]->id,
                 ]);
-                return redirect()->route('radio.index');
+                return redirect()->route('routeur.index');
             }
         }
     }
@@ -134,9 +124,9 @@ class RadioController extends Controller
      */
     public function edit(string $id)
     {
-        $radio = Radio::findOrFail($id);
+        $routeur = Routeur::findOrFail($id);
         // dd($produit);
-        return view('dashboard.radio.action', compact('radio'));
+        return view('dashboard.routeur.action', compact('routeur'));
     }
 
     /**
@@ -144,41 +134,31 @@ class RadioController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $radio = Radio::findOrFail($id);
-    //    dd('Ok '.$request->nom_radio);
-    //    dd('Ok '.$request->adresse_radio);
-    //    dd('Ok '.$request->signal);
-    //    dd('Ok '.$request->passerelle);
-    //    dd('Ok '.$request->masque);
-    //    dd('Ok '.$request->ap_nom);
-    //    dd('Ok '.$request->denomination);
-    //    dd('Ok '.$request->nom_client);
-
+        $routeur = Routeur::findOrFail($id);
+        
+        // dd($request->nom_ap);
+       
         if ($request->denomination) {
-             
-            $ap_id = Ap::where('aps.nom_ap', $request->ap_nom)
-                ->get('aps.id');
 
             $emplacement_denomination_id = Client::join('emplacements', 'clients.id', '=', 'emplacements.client_id')
                 ->where('denomination', '=', $request->denomination)
                 ->get('emplacements.id');
 
-            $radio->nom_radio = $request->nom_radio;
-            $radio->adresse_radio = $request->adresse_radio;
-            $radio->signal = $request->signal;
-            $radio->passerelle = $request->passerelle;
-            $radio->masque = $request->masque;
-            $radio->ap_id = $ap_id[0]->id;
-            $radio->emplacement_id = $emplacement_denomination_id[0]->id;
-            $radio->update();
+            // dd('Ok '.$emplacement_denomination_id);
 
-            return redirect()->route('radio.index');
+            // dd('je suis denomination');
+            $routeur->nom_routeur = $request->nom_routeur;
+            $routeur->adresse_routeur = $request->adresse_routeur;
+            $routeur->marque = $request->marque;
+            $routeur->modele = $request->modele;
+            $routeur->passerelle = $request->passerelle;
+            $routeur->masque = $request->masque;
+            $routeur->emplacement_id = $emplacement_denomination_id[0]->id;
+            $routeur->update();
+            return redirect()->route('routeur.index');
         }
 
         if ($request->nom_client) {
-            
-            $ap_id = Ap::where('aps.nom_ap', $request->ap_nom)
-                ->get('aps.id');
 
             $emplacement_nom_id = Client::join('emplacements', 'clients.id', '=', 'emplacements.client_id')
                 ->where('nom', '=', $request->nom_client)
@@ -186,19 +166,17 @@ class RadioController extends Controller
 
             // dd('Ok '.$emplacement_nom_id);
             
-            $radio->nom_radio = $request->nom_radio;
-            $radio->adresse_radio = $request->adresse_radio;
-            $radio->signal = $request->signal;
-            $radio->passerelle = $request->passerelle;
-            $radio->masque = $request->masque;
-            $radio->ap_id = $ap_id[0]->id;
-            $radio->emplacement_id = $emplacement_nom_id[0]->id;
-            $radio->update();
-
-            return redirect()->route('radio.index');
+            $routeur->nom_routeur = $request->nom_routeur;
+            $routeur->adresse_routeur = $request->adresse_routeur;
+            $routeur->marque = $request->marque;
+            $routeur->modele = $request->modele;
+            $routeur->passerelle = $request->passerelle;
+            $routeur->masque = $request->masque;
+            $routeur->emplacement_id = $emplacement_nom_id[0]->id;
+            $routeur->update();
+            // dd('je suis là');
+            return redirect()->route('routeur.index');
         }
-
-            return redirect()->route('radio.index');
     }
 
     /**
@@ -206,10 +184,9 @@ class RadioController extends Controller
      */
     public function destroy(string $id)
     {
-        $radio = Radio::findOrFail($id);
-
-
-        $radio->delete();
+        $routeur = Routeur::findOrFail($id);
+        
+        $routeur->delete();
 
         return redirect()->back();
     }

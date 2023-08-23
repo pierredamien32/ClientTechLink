@@ -81,7 +81,7 @@ class UserController extends Controller
                         'lien' => 'http://127.0.0.1:8000/'
                     ]);
 
-                    Mail::to($email)->send(new ConnecteMail($user));
+                    // Mail::to($email)->send(new ConnecteMail($user));
                 }
 
                 if ($type_user === "Admin") {
@@ -139,7 +139,7 @@ class UserController extends Controller
             if(Auth::user()->role->id == 1){
                 return redirect()->route('user.index');
             }else{
-                return redirect()->route('client.create');
+                return redirect()->route('client.index');
             }
             
         }

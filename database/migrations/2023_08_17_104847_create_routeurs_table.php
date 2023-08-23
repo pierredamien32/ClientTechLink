@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('nom_routeur');
             $table->string('adresse_routeur', 15);
-            $table->integer('marque');
-            $table->integer('modele');
+            $table->string('marque');
+            $table->string('modele');
             $table->string('passerelle', 15);
             $table->string('masque', 15);
             $table->foreignId('emplacement_id')->contrained()->onDelete('cascade');

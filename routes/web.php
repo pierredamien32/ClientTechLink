@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\UserController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\EmplacementController;
 use App\Http\Controllers\RadioController;
+use App\Http\Controllers\RouteurController;
 use App\Http\Controllers\SiteController;
 use Illuminate\Support\Facades\Route;
 
@@ -74,6 +75,12 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
             Route::delete('/delete/{id}', [RadioController::class, 'destroy'])->name('radio.delete');
         });
 
+        Route::prefix('routeurs')->group(function () {
+            Route::get('/', [RouteurController::class, 'index'])->name('routeur.index');
+            Route::post('/', [RouteurController::class, 'store'])->name('routeur.store');
+            Route::post('/update/{id}', [RouteurController::class, 'update'])->name('routeur.update');
+            Route::delete('/delete/{id}', [RouteurController::class, 'destroy'])->name('routeur.delete');
+        });
     });
 
     Route::post('/logout', [Usercontroller::class, 'logout'])->name('logout');

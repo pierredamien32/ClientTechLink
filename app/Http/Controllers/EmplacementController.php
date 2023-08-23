@@ -101,7 +101,7 @@ class EmplacementController extends Controller
         }
 
         return redirect()->back()->withErrors([
-            'denomination' => 'L\'entreprise ou le particulier n\'existe pas.'
+            'nom_client' => 'L\'entreprise ou le particulier n\'existe pas.'
         ])->withInput();
     }
 

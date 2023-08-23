@@ -44,6 +44,7 @@ class SiteController extends Controller
             'local_latitude' => 'required',
             'local_longitude' => 'required'
         ]);
+        
 
         $nom_site = $request->nom_site;
         $site = Site::where('nom_site', $nom_site)->first();

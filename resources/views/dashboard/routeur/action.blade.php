@@ -1,86 +1,83 @@
 {{-- Modal boite de modification  --}}
 {{-- <div class="modal-dialog modal-dialog-centered"> --}}
-<div class="modal fade" id="edit{{ $radio->id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+<div class="modal fade" id="edit{{ $routeur->id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Modification d'un radio</h5>
+                <h5 class="modal-title" id="staticBackdropLabel">Modification d'un routeur</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
 
-                <form action="{{ route('radio.update', $radio->id) }}" method="POST" class="forms-sample">
+                <form action="{{ route('routeur.update', $routeur->id) }}" method="POST" class="forms-sample">
                     @csrf
                     <div class="form-group">
-                        <label for="exampleInputUsername1">Nom de la radio</label>
-                        <input type="text" class="form-control @error('nom_radio') is-invalid @enderror"
-                            id="exampleInputUsername1" placeholder="Nom de la radio" name="nom_radio"
-                            value="{{ $radio->nom_radio }}">
-                        {{-- @error('nom_radio')
+                        <label for="exampleInputUsername1">Nom du routeur</label>
+                        <input type="text" class="form-control @error('nom_routeur') is-invalid @enderror"
+                            id="exampleInputUsername1" placeholder="Nom du routeur" name="nom_routeur"
+                            value="{{ $routeur->nom_routeur }}">
+                        {{-- @error('nom_routeur')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror --}}
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Adresse de la radio</label>
-                        <input type="text" id="floatInput" name="adresse_radio" step="any"
-                            class="form-control @error('adresse_radio') is-invalid @enderror" id="exampleInputEmail1"
-                            placeholder="Adresse de la radio" value="{{ $radio->adresse_radio }}">
-                        {{-- @error('adresse_radio')
+                        <label for="exampleInputEmail1">Adresse du routeur</label>
+                        <input type="text" id="floatInput" name="adresse_routeur" step="any"
+                            class="form-control @error('adresse_routeur') is-invalid @enderror" id="exampleInputEmail1"
+                            placeholder="Adresse du routeur" value="{{ $routeur->adresse_routeur }}">
+                        {{-- @error('adresse_routeur')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror --}}
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Signal de la radio</label>
-                        <input type="number" id="floatInput" name="signal" step="any"
-                            class="form-control @error('signal') is-invalid @enderror" id="exampleInputEmail1"
-                            placeholder="Signal" value="{{ $radio->signal }}">
-                        {{-- @error('signal')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror --}}
+                        <label for="exampleInputEmail1">La marque du routeur</label>
+                        <input type="text" id="floatInput" name="marque"
+                            class="form-control @error('marque') is-invalid @enderror" id="exampleInputEmail1"
+                            placeholder="marque" value="{{ $routeur->marque }}">
+                        {{-- @error('marque')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror --}}
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Passerelle de la radio</label>
+                        <label for="exampleInputEmail1">Le modèle du routeur</label>
+                        <input type="text" id="floatInput" name="modele"
+                            class="form-control @error('modele') is-invalid @enderror" id="exampleInputEmail1"
+                            placeholder="modele" value="{{ $routeur->modele }}">
+                        {{-- @error('modele')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror --}}
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Passerelle du routeur</label>
                         <input type="text" id="floatInput" name="passerelle" step="any"
                             class="form-control @error('passerelle') is-invalid @enderror" id="exampleInputEmail1"
-                            placeholder="Passerelle de la radio" value="{{ $radio->passerelle }}">
+                            placeholder="Passerelle du routeur" value="{{ $routeur->passerelle }}">
                         {{-- @error('passerelle')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror --}}
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Adresse masque de la radio</label>
+                        <label for="exampleInputEmail1">Adresse masque du routeur</label>
                         <input type="text" id="floatInput" name="masque" step="any"
                             class="form-control @error('masque') is-invalid @enderror" id="exampleInputEmail1"
-                            placeholder="masque de la radio" value="{{ $radio->masque }}">
+                            placeholder="masque du routeur" value="{{ $routeur->masque }}">
                         {{-- @error('masque')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror --}}
                     </div>
-                    <div class="form-group" id="">
-                        <label for="exampleFormControlSelect3">Associé à l'ap</label>
-                        <select id="" name="ap_nom" class="form-control">
-                            <option>{{ $radio->ap->nom_ap }}</option>
-                            @foreach ($aps as $ap)
-                                @if ($ap->nom_ap == $radio->ap->nom_ap)
-                                @else
-                                    <option>{{ $ap->nom_ap }}</option>
-                                @endif
-                            @endforeach
-                        </select>
-                    </div>
-                    @if ($radio->emplacement->client->nom == '--------')
+                    @if ($routeur->emplacement->client->nom == '--------')
                         <div class="form-group" id="">
                             <label for="exampleFormControlSelect3">Associé au client</label>
                             <select name="denomination"
                                 class="form-control form-control-sm @error('denomination') is-invalid @enderror"
                                 id="">
-                                <option>{{ $radio->emplacement->client->denomination }}</option>
+                                <option>{{ $routeur->emplacement->client->denomination }}</option>
 
                                 @foreach ($client_bureaux as $bureau)
-                                    @if ($bureau->denomination == $radio->emplacement->client->denomination)
+                                    @if ($bureau->denomination == $routeur->emplacement->client->denomination)
                                     @else
-                                        <option>{{ $bureau->denomination }}</option>
+                                        <option value="">{{ $bureau->denomination }}</option>
                                     @endif
                                 @endforeach
                             </select>
@@ -89,18 +86,18 @@
                                 @enderror --}}
                         </div>
                     @else
-                        {{-- @if ($radio->emplacement->client->denomination == '--------') --}}
+                        {{-- @if ($routeur->emplacement->client->denomination == '--------') --}}
                         <div class="form-group " id="">
                             <label for="exampleFormControlSelect3">Associé au client</label>
                             <select name="nom_client"
                                 class="form-control form-control-sm @error('denomination') is-invalid @enderror"
                                 id="">
-                                <option>{{ $radio->emplacement->client->nom }}</option>
+                                <option>{{ $routeur->emplacement->client->nom }}</option>
 
                                 @foreach ($client_maisons as $maison)
-                                    @if ($maison->nom == $radio->emplacement->client->nom)
+                                    @if ($maison->nom == $routeur->emplacement->client->nom)
                                     @else
-                                        <option>{{ $maison->nom }}</option>
+                                        <option value="">{{ $maison->nom }}</option>
                                     @endif
                                 @endforeach
                             </select>
@@ -128,18 +125,18 @@
 
 {{-- Modal boite de confirmation  --}}
 {{-- <div class="modal-dialog modal-dialog-centered"> --}}
-<div class="modal fade" id="delete{{ $radio->id }}" data-bs-backdrop="static" data-bs-keyboard="false"
+<div class="modal fade" id="delete{{ $routeur->id }}" data-bs-backdrop="static" data-bs-keyboard="false"
     tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Suppression d'un radio</h5>
+                <h5 class="modal-title" id="staticBackdropLabel">Suppression d'un routeur</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                Êtes vous sûr de vouloir supprimer cette radio?
+                Êtes vous sûr de vouloir supprimer ce routeur?
             </div>
-            <form action="{{ route('radio.delete', $radio->id) }}" method="post">
+            <form action="{{ route('routeur.delete', $routeur->id) }}" method="post">
                 @csrf
                 @method('DELETE')
                 <div class="modal-footer">

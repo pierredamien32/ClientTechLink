@@ -278,7 +278,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="">
+                                <a class="nav-link" href="{{ route('routeur.index') }}">
                                     <span class="menu-title">Les routeurs</span>
                                     <i class="mdi mdi-inbox menu-icon"></i>
                                 </a>
