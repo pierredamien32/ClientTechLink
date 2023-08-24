@@ -22,11 +22,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('acceuil');
-});
+})->middleware('guest');
 
 
-Route::get('/login', [UserController::class, 'createFormLogin'])->name('createFormLogin');
-Route::post('/login', [UserController::class, 'loginUsers'])->name('loginUsers');
+Route::get('/login', [UserController::class, 'createFormLogin'])->name('createFormLogin')->middleware('guest');
+Route::post('/login', [UserController::class, 'loginUsers'])->name('loginUsers')->middleware('guest');
+
 
 // Route accessible que si l'utilisateur est connecté
 Route::middleware(['auth', 'auth.session'])->group(function () {
