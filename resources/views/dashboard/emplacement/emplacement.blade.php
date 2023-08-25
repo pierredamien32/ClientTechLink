@@ -95,6 +95,21 @@
                 padding: 8px 18px;
             }
         }
+
+        @media screen and (min-width:426px) and (max-width: 500px){
+            .btn-add{
+                padding: 0 10px;
+                width: 100%;
+            }
+        }
+
+        @media screen and (max-width:425px){
+            .btn-add{
+                padding: 0 10px;
+                width: 100%;
+            }
+        }
+
     </style>
     <div class="content-wrapper">
         <div class="page-header">
@@ -111,44 +126,6 @@
                 </ul>
             </nav>
         </div>
-        {{-- <div class="row">
-            <div class="col-md-4 stretch-card grid-margin">
-                <div class="card bg-gradient-danger card-img-holder text-white">
-                    <div class="card-body">
-                        <img src="{{asset('assets/images/dashboard/circle.svg')}}" class="card-img-absolute" alt="circle-image" />
-                        <h4 class="font-weight-normal mb-3">Utilisateur Total <i
-                                class="mdi mdi-chart-line mdi-24px float-right"></i>
-                        </h4>
-                        <h2 class="mb-5">{{ count($utilisateurs) }}</h2>
-                        @if ($date)
-                            <h6 class="card-text">Mise à jour depuis le {{ $date->updated_at->format('d/m/y') }}</h6>
-                        @endif
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 stretch-card grid-margin">
-                <div class="card bg-gradient-info card-img-holder text-white">
-                    <div class="card-body">
-                        <img src="{{asset('assets/images/dashboard/circle.svg')}}" class="card-img-absolute" alt="circle-image" />
-                        <h4 class="font-weight-normal mb-3"><i class="mdi mdi-bookmark-outline mdi-24px float-right"></i>
-                        </h4>
-                        <h2 class="mb-5">-------</h2>
-                        <h6 class="card-text"></h6>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 stretch-card grid-margin">
-                <div class="card bg-gradient-success card-img-holder text-white">
-                    <div class="card-body">
-                        <img src="{{asset('assets/images/dashboard/circle.svg')}}" class="card-img-absolute" alt="circle-image" />
-                        <h4 class="font-weight-normal mb-3"><i class="mdi mdi-diamond mdi-24px float-right"></i>
-                        </h4>
-                        <h2 class="mb-5">-------</h2>
-                        <h6 class="card-text"></h6>
-                    </div>
-                </div>
-            </div>
-        </div> --}}
         <div class="row" style="margin-bottom: 20px; display: flex; justify-content:center; align-items:center;">
             <form action="{{ route('emplacement.index') }}" method="get" accept-charset="UTF-8" role="search">
                 <div class="input-box">
@@ -168,7 +145,7 @@
                             <h4 class="card-title">Liste des Emplacements</h4>
 
                             <button type="button" data-bs-toggle="modal" data-bs-target="#modal-ajout"
-                                class="btn btn-block btn-lg btn-gradient-primary">+ Ajouter un emplacement</button>
+                                class="btn btn-add btn-gradient-primary">+ Ajouter un emplacement</button>
                         </div>
 
                         <div class="table-responsive">
@@ -192,16 +169,14 @@
                                             <td>
                                                 {{ $emplacement->local_longitude }}
                                             </td>
-                                            @if ($emplacement->client->nom === "--------")
-
+                                            @if ($emplacement->client->nom === '--------')
                                             @else
                                                 <td>
                                                     {{ $emplacement->client->nom }}
                                                 </td>
                                             @endif
 
-                                            @if ($emplacement->client->denomination === "--------")
-                                                
+                                            @if ($emplacement->client->denomination === '--------')
                                             @else
                                                 <td>
                                                     {{ $emplacement->client->denomination }}
@@ -276,16 +251,59 @@
                         <form action="{{ route('emplacement.store') }}" method="POST" class="forms-sample">
                             @csrf
                             <div class="form-group">
+                                <label for="exampleFormControlSelect3">Type du client</label>
+                                <select class="form-control form-control-sm" id="exampleFormControlSelect3"
+                                    onchange="handleClientTypeChange()">
+                                    <option>Particulier</option>
+                                    <option>Entreprise</option>
+                                </select>
+                            </div>
+                            <div class="form-group transition-hidden" id="particulierSection">
+                                <label for="exampleFormControlSelect3">Associé au client</label>
+                                <select name="nom_client"
+                                    class="form-control form-control-sm @error('nom_client') is-invalid @enderror"
+                                    id="exampleFormControlSelect3">
+                                    <option></option>
+                                    @foreach ($clients as $client)
+                                        @if ($client->nom == '--------')
+                                        @else
+                                            <option>{{ $client->nom }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                                @error('nom_client')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group transition-hidden" id="entrepriseSection">
+
+                                <label for="exampleFormControlSelect3">Associé au client</label>
+                                <select name="denomination"
+                                    class="form-control form-control-sm @error('denomination') is-invalid @enderror"
+                                    id="exampleFormControlSelect3">
+                                    <option></option>
+                                    @foreach ($clients as $client)
+                                        @if ($client->denomination == '--------')
+                                        @else
+                                            <option>{{ $client->denomination }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                                @error('denomination')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group">
                                 <label for="exampleInputUsername1">Emplacement</label>
-                                {{-- <input type="text" class="form-control @error('nom_emplacement') is-invalid @enderror"
+                                <input type="text" class="form-control @error('nom_emplacement') is-invalid @enderror"
                                     id="exampleInputUsername1" placeholder="Nom du emplacement" name="nom_emplacement"
-                                    value="{{ old('nom_emplacement') }}"> --}}
-                                <select name="nom_emplacement" id="exampleFormControlSelect3"
+                                    value="{{ old('nom_emplacement') }}">
+                                {{-- <select name="nom_emplacement" id="exampleFormControlSelect3"
                                     class="form-control form-control-sm @error('nom_emplacement') is-invalid @enderror"
                                     onchange="handleClientTypeChange()">
                                     <option>Maison</option>
                                     <option>Bureau</option>
-                                </select>
+                                </select> --}}
                                 @error('nom_emplacement')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -310,51 +328,7 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-                            {{-- <div class="form-group">
-                                <label for="exampleFormControlSelect3">Type du client</label>
-                                <select class="form-control form-control-sm" id="exampleFormControlSelect3"
-                                    onchange="handleClientTypeChange()">
-                                    <option>Particulier</option>
-                                    <option>Entreprise</option>
-                                </select>
-                            </div> --}}
-                            <div class="form-group transition-hidden" id="particulierSection">
-                                <label for="exampleFormControlSelect3">Associé au client</label>
-                                <select name="nom_client" 
-                                    class="form-control form-control-sm @error('nom_client') is-invalid @enderror"
-                                    id="exampleFormControlSelect3">
-                                    <option></option>
-                                    @foreach ($clients as $client)
-                                        @if ( $client->nom == '--------' )
-                                            
-                                        @else
-                                            <option>{{ $client->nom }}</option>
-                                        @endif
-                                    @endforeach
-                                </select>
-                                @error('nom_client')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="form-group transition-hidden" id="entrepriseSection">
 
-                                <label for="exampleFormControlSelect3">Associé au client</label>
-                                <select name="denomination"
-                                    class="form-control form-control-sm @error('denomination') is-invalid @enderror"
-                                    id="exampleFormControlSelect3">
-                                    <option></option>
-                                    @foreach ($clients as $client)
-                                        @if ( $client->denomination == '--------' )
-                                            
-                                        @else
-                                            <option>{{ $client->denomination }}</option>
-                                        @endif
-                                    @endforeach
-                                </select>
-                                @error('denomination')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
                                 <button type="submit" class="btn btn-primary">Enregister</button>
@@ -374,12 +348,12 @@
             var particulierSection = document.getElementById("particulierSection");
             var entrepriseSection = document.getElementById("entrepriseSection");
 
-            if (selectedOption === "Maison") {
+            if (selectedOption === "Particulier") {
                 particulierSection.classList.remove("transition-hidden");
                 particulierSection.classList.add("transition-visible");
                 entrepriseSection.classList.remove("transition-visible");
                 entrepriseSection.classList.add("transition-hidden");
-            } else if (selectedOption === "Bureau") {
+            } else if (selectedOption === "Entreprise") {
                 entrepriseSection.classList.remove("transition-hidden");
                 entrepriseSection.classList.add("transition-visible");
                 particulierSection.classList.remove("transition-visible");

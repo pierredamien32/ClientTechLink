@@ -82,11 +82,14 @@ class EmplacementController extends Controller
                 ])->withInput();
             }
 
-            $existingEmplacement = Emplacement::where('client_id', $client_id)->first();
+            $nomEmplacement = Emplacement::where('client_id', $client_id)
+                ->where('nom_emplacement', $request->nom_emplacement)
+                ->first();
 
-            if ($existingEmplacement) {
+
+            if ($nomEmplacement) {
                 return redirect()->back()->withErrors([
-                    'nom_client' => 'Cette entreprise ou ce particulier a déjà un emplacement.'
+                    'nom_client' => 'Cette entreprise ou ce particulier a déjà cet emplacement.'
                 ])->withInput();
             }
 
@@ -129,28 +132,55 @@ class EmplacementController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $emplacement = Emplacement::findOrFail($id);
-
-        $emplacement->nom_emplacement = $request->nom_emplacement;
-        $emplacement->local_latitude = $request->local_latitude;
-        $emplacement->local_longitude = $request->local_longitude;
+        $request->validate([
+            'nom_emplacement' => 'required|string',
+            'local_latitude' => 'required|numeric',
+            'local_longitude' => 'required|numeric'
+        ]);
 
         if ($request->denomination) {
-            $client_entreprise_id = Client::where('clients.denomination', $request->denomination)
-                ->get('clients.id');
-
-
-            $emplacement->client_id = $client_entreprise_id[0]->id;
-        } else if ($request->nom_client) {
-            $client_particulier_id = Client::where('clients.nom', $request->nom_client)
-                ->get('clients.id');
-
-            $emplacement->client_id = $client_particulier_id[0]->id;
+            $client_id = Client::where('denomination', $request->denomination)->value('id');
+        } elseif ($request->nom_client) {
+            $client_id = Client::where('nom', $request->nom_client)->value('id');
         }
+        $nomEmplacement = Emplacement::where('client_id', $client_id)
+            ->where('nom_emplacement', $request->nom_emplacement)
+            ->first();
 
-        $emplacement->update();
+        if ($nomEmplacement) {
+            if ($request->nom_client) {
+                return redirect()->back()->withErrors([
+                    'nom_client' => 'Ce particulier a déjà cet emplacement.'
+                ])->withInput();
+            } else {
+                return redirect()->back()->withErrors([
+                    'denomination' => 'Cette entreprise a déjà cet emplacement.'
+                ])->withInput();
+            }
+        } else {
+            $emplacement = Emplacement::findOrFail($id);
 
-        return redirect()->route('emplacement.index');
+            $emplacement->nom_emplacement = $request->nom_emplacement;
+            $emplacement->local_latitude = $request->local_latitude;
+            $emplacement->local_longitude = $request->local_longitude;
+
+            if ($request->denomination) {
+                $client_entreprise_id = Client::where('clients.denomination', $request->denomination)
+                    ->get('clients.id');
+
+
+                $emplacement->client_id = $client_entreprise_id[0]->id;
+            } else if ($request->nom_client) {
+                $client_particulier_id = Client::where('clients.nom', $request->nom_client)
+                    ->get('clients.id');
+
+                $emplacement->client_id = $client_particulier_id[0]->id;
+            }
+
+            $emplacement->update();
+
+            return redirect()->route('emplacement.index');
+        }
     }
 
     /**

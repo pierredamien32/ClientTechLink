@@ -78,7 +78,23 @@
                 font-size: 14px;
                 padding: 8px 18px;
             }
+            
         }
+
+        @media screen and (min-width:426px) and (max-width: 500px){
+            .btn-add{
+                padding: 0 10px;
+                width: 100%;
+            }
+        }
+
+        @media screen and (max-width:425px){
+            .btn-add{
+                padding: 0 10px;
+                width: 100%;
+            }
+        }
+
     </style>
     <div class="content-wrapper">
         <div class="page-header">
@@ -152,7 +168,7 @@
                             <h4 class="card-title">Liste des Utilisateurs</h4>
 
                             <button type="button" data-bs-toggle="modal" data-bs-target="#modal-ajout"
-                                class="btn btn-block btn-lg btn-gradient-primary">+ Ajouter un utilisateur</button>
+                                class="btn btn-gradient-primary btn-add" >+ Ajouter un utilisateur</button>
                         </div>
 
                         <div class="table-responsive">
@@ -176,7 +192,11 @@
                                             <td>
                                                 {{ $user->type_user }}
                                             </td>
-                                            <td>le 12/08/2023</td>
+                                            @if ($user->last_login_at)
+                                                <td> depuis le {{ $user->last_login_at }} </td>
+                                            @else
+                                                <td> -------- </td>
+                                            @endif
                                             <td>
                                                 {{-- <a href="">
                                                 <span class="page-title-icon bg-gradient-success text-white me-2 tail">

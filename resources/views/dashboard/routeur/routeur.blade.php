@@ -95,6 +95,20 @@
                 padding: 8px 18px;
             }
         }
+
+        @media screen and (min-width:426px) and (max-width: 500px){
+            .btn-add{
+                padding: 0 10px;
+                width: 100%;
+            }
+        }
+
+        @media screen and (max-width:425px){
+            .btn-add{
+                padding: 0 10px;
+                width: 100%;
+            }
+        }
     </style>
     <div class="content-wrapper">
         <div class="page-header">
@@ -111,44 +125,6 @@
                 </ul>
             </nav>
         </div>
-        {{-- <div class="row">
-            <div class="col-md-4 stretch-card grid-margin">
-                <div class="card bg-gradient-danger card-img-holder text-white">
-                    <div class="card-body">
-                        <img src="{{asset('assets/images/dashboard/circle.svg')}}" class="card-img-absolute" alt="circle-image" />
-                        <h4 class="font-weight-normal mb-3">Utilisateur Total <i
-                                class="mdi mdi-chart-line mdi-24px float-right"></i>
-                        </h4>
-                        <h2 class="mb-5">{{ count($utilisateurs) }}</h2>
-                        @if ($date)
-                            <h6 class="card-text">Mise à jour depuis le {{ $date->updated_at->format('d/m/y') }}</h6>
-                        @endif
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 stretch-card grid-margin">
-                <div class="card bg-gradient-info card-img-holder text-white">
-                    <div class="card-body">
-                        <img src="{{asset('assets/images/dashboard/circle.svg')}}" class="card-img-absolute" alt="circle-image" />
-                        <h4 class="font-weight-normal mb-3"><i class="mdi mdi-bookmark-outline mdi-24px float-right"></i>
-                        </h4>
-                        <h2 class="mb-5">-------</h2>
-                        <h6 class="card-text"></h6>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 stretch-card grid-margin">
-                <div class="card bg-gradient-success card-img-holder text-white">
-                    <div class="card-body">
-                        <img src="{{asset('assets/images/dashboard/circle.svg')}}" class="card-img-absolute" alt="circle-image" />
-                        <h4 class="font-weight-normal mb-3"><i class="mdi mdi-diamond mdi-24px float-right"></i>
-                        </h4>
-                        <h2 class="mb-5">-------</h2>
-                        <h6 class="card-text"></h6>
-                    </div>
-                </div>
-            </div>
-        </div> --}}
         <div class="row" style="margin-bottom: 20px; display: flex; justify-content:center; align-items:center;">
             <form action="{{ route('routeur.index') }}" method="get" accept-charset="UTF-8" role="search">
                 <div class="input-box">
@@ -168,7 +144,7 @@
                             <h4 class="card-title">Liste des Routeurs</h4>
 
                             <button type="button" data-bs-toggle="modal" data-bs-target="#modal-ajout"
-                                class="btn btn-block btn-lg btn-gradient-primary">+ Ajouter un routeur</button>
+                                class="btn btn-add btn-gradient-primary">+ Ajouter un routeur</button>
                         </div>
 
                         <div class="table-responsive">
@@ -176,9 +152,9 @@
                                 <thead>
                                     <tr>
                                         <th> Nom du routeur </th>
-                                        <th> Adresse du routeur </th>
                                         <th> La marque </th>
                                         <th> Le modèle </th>
+                                        <th> Adresse du routeur </th>
                                         <th> Passerelle </th>
                                         <th> Masque </th>
                                         <th> Associé au client </th>
@@ -191,13 +167,13 @@
                                             <td>
                                                 {{ $routeur->nom_routeur }}
                                             </td>
-                                            <td> {{ $routeur->adresse_routeur }} </td>
                                             <td>
                                                 {{ $routeur->marque }}
                                             </td>
                                             <td>
                                                 {{ $routeur->modele }}
                                             </td>
+                                            <td> {{ $routeur->adresse_routeur }} </td>
                                             <td>
                                                 {{ $routeur->passerelle }}
                                             </td>
@@ -291,16 +267,6 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Adresse du routeur</label>
-                                <input type="text" id="floatInput" name="adresse_routeur" step="any"
-                                    class="form-control @error('adresse_routeur') is-invalid @enderror"
-                                    id="exampleInputEmail1" placeholder="Adresse de la routeur"
-                                    value="{{ old('adresse_routeur') }}">
-                                @error('adresse_routeur')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="form-group">
                                 <label for="exampleInputEmail1">La marque du routeur</label>
                                 <input type="text" id="floatInput" name="marque" 
                                     class="form-control @error('marque') is-invalid @enderror" id="exampleInputEmail1"
@@ -318,6 +284,17 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Adresse du routeur</label>
+                                <input type="text" id="floatInput" name="adresse_routeur" step="any"
+                                    class="form-control @error('adresse_routeur') is-invalid @enderror"
+                                    id="exampleInputEmail1" placeholder="Adresse de la routeur"
+                                    value="{{ old('adresse_routeur') }}">
+                                @error('adresse_routeur')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Passerelle du routeur</label>
                                 <input type="text" id="floatInput" name="passerelle" step="any"

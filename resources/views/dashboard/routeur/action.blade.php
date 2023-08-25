@@ -17,54 +17,54 @@
                         <input type="text" class="form-control @error('nom_routeur') is-invalid @enderror"
                             id="exampleInputUsername1" placeholder="Nom du routeur" name="nom_routeur"
                             value="{{ $routeur->nom_routeur }}">
-                        {{-- @error('nom_routeur')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror --}}
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Adresse du routeur</label>
-                        <input type="text" id="floatInput" name="adresse_routeur" step="any"
-                            class="form-control @error('adresse_routeur') is-invalid @enderror" id="exampleInputEmail1"
-                            placeholder="Adresse du routeur" value="{{ $routeur->adresse_routeur }}">
-                        {{-- @error('adresse_routeur')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror --}}
+                        @error('nom_routeur')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">La marque du routeur</label>
                         <input type="text" id="floatInput" name="marque"
                             class="form-control @error('marque') is-invalid @enderror" id="exampleInputEmail1"
                             placeholder="marque" value="{{ $routeur->marque }}">
-                        {{-- @error('marque')
+                        @error('marque')
                             <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror --}}
+                        @enderror
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Le modèle du routeur</label>
                         <input type="text" id="floatInput" name="modele"
                             class="form-control @error('modele') is-invalid @enderror" id="exampleInputEmail1"
                             placeholder="modele" value="{{ $routeur->modele }}">
-                        {{-- @error('modele')
+                        @error('modele')
                             <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror --}}
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Adresse du routeur</label>
+                        <input type="text" id="floatInput" name="adresse_routeur" step="any"
+                            class="form-control @error('adresse_routeur') is-invalid @enderror" id="exampleInputEmail1"
+                            placeholder="Adresse du routeur" value="{{ $routeur->adresse_routeur }}">
+                        @error('adresse_routeur')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Passerelle du routeur</label>
                         <input type="text" id="floatInput" name="passerelle" step="any"
                             class="form-control @error('passerelle') is-invalid @enderror" id="exampleInputEmail1"
                             placeholder="Passerelle du routeur" value="{{ $routeur->passerelle }}">
-                        {{-- @error('passerelle')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror --}}
+                        @error('passerelle')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Adresse masque du routeur</label>
                         <input type="text" id="floatInput" name="masque" step="any"
                             class="form-control @error('masque') is-invalid @enderror" id="exampleInputEmail1"
                             placeholder="masque du routeur" value="{{ $routeur->masque }}">
-                        {{-- @error('masque')
+                        @error('masque')
                             <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror --}}
+                        @enderror
                     </div>
                     @if ($routeur->emplacement->client->nom == '--------')
                         <div class="form-group" id="">

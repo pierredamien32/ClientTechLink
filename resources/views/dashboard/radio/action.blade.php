@@ -12,51 +12,6 @@
 
                 <form action="{{ route('radio.update', $radio->id) }}" method="POST" class="forms-sample">
                     @csrf
-                    <div class="form-group">
-                        <label for="exampleInputUsername1">Nom de la radio</label>
-                        <input type="text" class="form-control @error('nom_radio') is-invalid @enderror"
-                            id="exampleInputUsername1" placeholder="Nom de la radio" name="nom_radio"
-                            value="{{ $radio->nom_radio }}">
-                        {{-- @error('nom_radio')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror --}}
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Adresse de la radio</label>
-                        <input type="text" id="floatInput" name="adresse_radio" step="any"
-                            class="form-control @error('adresse_radio') is-invalid @enderror" id="exampleInputEmail1"
-                            placeholder="Adresse de la radio" value="{{ $radio->adresse_radio }}">
-                        {{-- @error('adresse_radio')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror --}}
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Signal de la radio</label>
-                        <input type="number" id="floatInput" name="signal" step="any"
-                            class="form-control @error('signal') is-invalid @enderror" id="exampleInputEmail1"
-                            placeholder="Signal" value="{{ $radio->signal }}">
-                        {{-- @error('signal')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror --}}
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Passerelle de la radio</label>
-                        <input type="text" id="floatInput" name="passerelle" step="any"
-                            class="form-control @error('passerelle') is-invalid @enderror" id="exampleInputEmail1"
-                            placeholder="Passerelle de la radio" value="{{ $radio->passerelle }}">
-                        {{-- @error('passerelle')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror --}}
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Adresse masque de la radio</label>
-                        <input type="text" id="floatInput" name="masque" step="any"
-                            class="form-control @error('masque') is-invalid @enderror" id="exampleInputEmail1"
-                            placeholder="masque de la radio" value="{{ $radio->masque }}">
-                        {{-- @error('masque')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror --}}
-                    </div>
                     <div class="form-group" id="">
                         <label for="exampleFormControlSelect3">Associé à l'ap</label>
                         <select id="" name="ap_nom" class="form-control">
@@ -110,15 +65,73 @@
                         </div>
                         {{-- @endif --}}
                     @endif
-
-
+                    <div class="form-group">
+                        <label for="exampleInputUsername1">Nom de la radio</label>
+                        <input type="text" class="form-control @error('nom_radio') is-invalid @enderror"
+                            id="exampleInputUsername1" placeholder="Nom de la radio" name="nom_radio"
+                            value="{{ $radio->nom_radio }}">
+                        {{-- @error('nom_radio')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror --}}
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Adresse de la radio</label>
+                        <input type="text" id="floatInput" name="adresse_radio" step="any"
+                            class="form-control @error('adresse_radio') is-invalid @enderror" id="exampleInputEmail1"
+                            placeholder="Adresse de la radio" value="{{ $radio->adresse_radio }}">
+                        {{-- @error('adresse_radio')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror --}}
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Passerelle de la radio</label>
+                        <input type="text" id="floatInput" name="passerelle" step="any"
+                            class="form-control @error('passerelle') is-invalid @enderror" id="exampleInputEmail1"
+                            placeholder="Passerelle de la radio" value="{{ $radio->passerelle }}">
+                        {{-- @error('passerelle')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror --}}
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Adresse masque de la radio</label>
+                        <input type="text" id="floatInput" name="masque" step="any"
+                            class="form-control @error('masque') is-invalid @enderror" id="exampleInputEmail1"
+                            placeholder="masque de la radio" value="{{ $radio->masque }}">
+                        {{-- @error('masque')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror --}}
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Signal de la radio</label>
+                        <input type="number" id="floatInput" name="signal" step="any"
+                            class="form-control @error('signal') is-invalid @enderror" id="exampleInputEmail1"
+                            placeholder="Signal" value="{{ $radio->signal }}">
+                        {{-- @error('signal')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror --}}
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect3">Status</label>
+                        <select name="status"
+                            class="form-control form-control-sm @error('status') is-invalid @enderror">
+                            <option value="">{{$radio->status}}</option>
+                            @if ($radio->status == 'Actif')
+                                <option>Inactif</option>
+                            @else
+                                <option>Actif</option>
+                            @endif
+                             {{-- Entreprise --}}
+                        </select>
+                        @error('status')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
                         <button type="submit" class="btn btn-primary">Enregister</button>
                     </div>
                 </form>
             </div>
-
         </div>
     </div>
 </div>

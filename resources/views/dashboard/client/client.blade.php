@@ -79,6 +79,20 @@
                 padding: 8px 18px;
             }
         }
+
+         @media screen and (min-width:426px) and (max-width: 500px){
+            .btn-add{
+                padding: 0 10px;
+                width: 100%;
+            }
+        }
+
+        @media screen and (max-width:425px){
+            .btn-add{
+                padding: 0 10px;
+                width: 100%;
+            }
+        }
     </style>
     <div class="content-wrapper">
         <div class="page-header">
@@ -161,7 +175,7 @@
                         <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
                             <h4 class="card-title">Liste des Clients</h4>
                             <button type="button" data-bs-toggle="modal" data-bs-target="#modal-ajout"
-                                class="btn btn-block btn-lg btn-gradient-primary" id="displayForm">+ Ajouter un
+                                class="btn btn-add btn-gradient-primary" id="displayForm">+ Ajouter un
                                 client</button>
                         </div>
 

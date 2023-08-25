@@ -60,7 +60,8 @@ class RadioController extends Controller
             'signal' => 'required',
             'passerelle' => 'required',
             'masque' => 'required',
-            'nom_ap' => 'required'
+            'nom_ap' => 'required',
+            'status' => 'required'
         ]);
 
         // dd($request->nom_ap);
@@ -93,6 +94,7 @@ class RadioController extends Controller
                     'masque' => $request->masque,
                     'ap_id' => $ap_id[0]->id,
                     'emplacement_id' => $emplacement_denomination_id[0]->id,
+                    'status' => $request->status
                 ]);
                 return redirect()->route('radio.index');
             }
@@ -115,6 +117,7 @@ class RadioController extends Controller
                     'masque' => $request->masque,
                     'ap_id' => $ap_id[0]->id,
                     'emplacement_id' => $emplacement_nom_id[0]->id,
+                    'status' => $request->status
                 ]);
                 return redirect()->route('radio.index');
             }
@@ -144,7 +147,17 @@ class RadioController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        // $reponse = $request->validate([
+        //     'nom_radio' => 'required|string',
+        //     'adresse_radio' => 'required',
+        //     'signal' => 'required',
+        //     'passerelle' => 'required',
+        //     'masque' => 'required',
+        //     'nom_ap' => 'required',
+        //     'status' => 'required'
+        // ]);
         $radio = Radio::findOrFail($id);
+        
     //    dd('Ok '.$request->nom_radio);
     //    dd('Ok '.$request->adresse_radio);
     //    dd('Ok '.$request->signal);
@@ -170,6 +183,7 @@ class RadioController extends Controller
             $radio->masque = $request->masque;
             $radio->ap_id = $ap_id[0]->id;
             $radio->emplacement_id = $emplacement_denomination_id[0]->id;
+            $radio->status = $request->status;
             $radio->update();
 
             return redirect()->route('radio.index');
@@ -193,6 +207,7 @@ class RadioController extends Controller
             $radio->masque = $request->masque;
             $radio->ap_id = $ap_id[0]->id;
             $radio->emplacement_id = $emplacement_nom_id[0]->id;
+            $radio->status = $request->status;
             $radio->update();
 
             return redirect()->route('radio.index');
@@ -207,7 +222,6 @@ class RadioController extends Controller
     public function destroy(string $id)
     {
         $radio = Radio::findOrFail($id);
-
 
         $radio->delete();
 

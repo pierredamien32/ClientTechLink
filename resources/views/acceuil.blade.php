@@ -5,7 +5,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>ClientTechLink</title>
+    <title>Customer Directory</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="{{ asset('assets/vendors/mdi/css/materialdesignicons.min.css')}}">
     <link rel="stylesheet" href="{{ asset('assets/vendors/css/vendor.bundle.base.css')}}">
@@ -58,11 +58,30 @@ a:hover {
   color:#9a55ff;
   font-size: 16px;
 }
+h1{
+    font-size: 3rem;
+}
 
+p{
+    font-size: 1.5rem;
+}
 
 @media screen and (max-width:640px) {
+
     .style{
         margin: 0 30px;
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        justify-content: center;
+    }
+
+    p{
+        font-size: 1.5rem;
+    }
+
+    h1{
+        font-size: 2.5rem;
     }
 }
 </style>
@@ -70,8 +89,8 @@ a:hover {
 <body class="bg-gradient-primary body" style="z-index: 1;">
     <div class="container d-flex justify-content-center align-items-center min-vh-100">
         <div class="style">
-            <h1 class="text-white font-weight-bold" style="font-size: 60px;">Bienvenue sur ClientTechLink!</h1>
-            <p class="text-white" style="font-size: 20px;">Ceci est la plateforme de support technique dédiée aux clients d'AnyxTech.</p>
+            <h1 class="text-white font-weight-bold" style="text-align: center;">Bienvenue sur Customer Directory!</h1>
+            <p class="text-white" style="text-align: center;">La plateforme de support technique dédiée aux clients d'AnyxTech.</p>
             <a href="{{route('createFormLogin')}}" class="text-gradient">Connectez-vous </a>
         </div>
     </div>

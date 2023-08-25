@@ -5,7 +5,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>ClientTechLink</title>
+    <title>Customer Directory</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="{{ asset('assets/vendors/mdi/css/materialdesignicons.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendors/css/vendor.bundle.base.css') }}">
@@ -32,20 +32,50 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        /* width: 50%; */
+        /* padding: 0 100px; */
+    }
+
+    .titre {
+        /* padding: 0 200px;
+        background: red; */
+    }
+
+    .body {
+        /* width: 100%;
+        height: 100vh;
+        margin: 10px;      */
+
+        width: 100%;
+        /* Par exemple, commencez avec une largeur de 50% */
+        height: 100vh;
+        /* Hauteur fixe, vous pouvez ajuster selon vos besoins */
+        background-color: #e0e0e0;
+        transition: width 0.3s;
+    }
+
+    @media screen and (max-width:400px) {
+        .body {
+            width: 95%;
+            margin: 0 -5px;
+        }
+        button{
+            padding: 10px 50px;
+        }
     }
 </style>
 
 <body>
-    <div class="container-scroller">
+    <div class="container-scroller ">
         <div class="container-fluid page-body-wrapper full-page-wrapper">
             <div class="content-wrapper d-flex align-items-center auth">
                 <div class="row flex-grow">
                     <div class="col-lg-4 mx-auto">
-                        <div class="auth-form-light text-left p-5">
+                        <div class="auth-form-light text-left p-5 body">
                             <form class="pt-3" action="{{ route('loginUsers') }}" method="POST">
                                 @csrf
-                                <div class="brand-logo text-gradient container">
-                                    <h1 class="gradient-primary">ClientTechLink</h1>
+                                <div class="brand-logo container">
+                                    <img style="width: 100%;" src="{{ asset('assets/images/logo.svg')}}">
                                 </div>
                                 @error('erreur')
                                     <div class="d-flex justify-content-center align-items-center">
@@ -72,7 +102,7 @@
                                 </div>
                                 <div class="mt-3 container">
                                     <button
-                                        class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn"
+                                        class="btn btn-block btn-gradient-primary btn-lg font-weight-medium "
                                         type="submit">Se connecter</button>
                                 </div>
                                 <div class="my-2 d-flex justify-content-between align-items-center">

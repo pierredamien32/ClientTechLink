@@ -11,7 +11,12 @@ class Ap extends Model
     protected $table = 'aps';
     protected $fillable = [
         'nom_ap',
-        'site_id'
+        'site_id',
+        'ssid',
+        'adresse_ap',
+        'masque',
+        'azimuth',
+        'hauteur'
     ];
 
     public function site(){

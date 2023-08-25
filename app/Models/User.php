@@ -23,7 +23,9 @@ class User extends Authenticatable
         'type_user',
         'password',
         'role_id',
-        'lien'
+        'lien',
+        'last_login_at',
+        'last_login_ip',
     ];
 
     /**

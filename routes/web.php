@@ -84,6 +84,6 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
         });
     });
 
-    Route::post('/logout', [Usercontroller::class, 'logout'])->name('logout');
+    Route::get('/logout', [Usercontroller::class, 'logout'])->name('logout');
     
 });

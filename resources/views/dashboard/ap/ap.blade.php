@@ -79,6 +79,20 @@
                 padding: 8px 18px;
             }
         }
+
+        @media screen and (min-width:426px) and (max-width: 500px){
+            .btn-add{
+                padding: 0 10px;
+                width: 100%;
+            }
+        }
+
+        @media screen and (max-width:425px){
+            .btn-add{
+                padding: 0 10px;
+                width: 100%;
+            }
+        }
     </style>
     <div class="content-wrapper">
         <div class="page-header">
@@ -95,44 +109,6 @@
                 </ul>
             </nav>
         </div>
-        {{-- <div class="row">
-            <div class="col-md-4 stretch-card grid-margin">
-                <div class="card bg-gradient-danger card-img-holder text-white">
-                    <div class="card-body">
-                        <img src="{{asset('assets/images/dashboard/circle.svg')}}" class="card-img-absolute" alt="circle-image" />
-                        <h4 class="font-weight-normal mb-3">Utilisateur Total <i
-                                class="mdi mdi-chart-line mdi-24px float-right"></i>
-                        </h4>
-                        <h2 class="mb-5">{{ count($utilisateurs) }}</h2>
-                        @if ($date)
-                            <h6 class="card-text">Mise à jour depuis le {{ $date->updated_at->format('d/m/y') }}</h6>
-                        @endif
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 stretch-card grid-margin">
-                <div class="card bg-gradient-info card-img-holder text-white">
-                    <div class="card-body">
-                        <img src="{{asset('assets/images/dashboard/circle.svg')}}" class="card-img-absolute" alt="circle-image" />
-                        <h4 class="font-weight-normal mb-3"><i class="mdi mdi-bookmark-outline mdi-24px float-right"></i>
-                        </h4>
-                        <h2 class="mb-5">-------</h2>
-                        <h6 class="card-text"></h6>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 stretch-card grid-margin">
-                <div class="card bg-gradient-success card-img-holder text-white">
-                    <div class="card-body">
-                        <img src="{{asset('assets/images/dashboard/circle.svg')}}" class="card-img-absolute" alt="circle-image" />
-                        <h4 class="font-weight-normal mb-3"><i class="mdi mdi-diamond mdi-24px float-right"></i>
-                        </h4>
-                        <h2 class="mb-5">-------</h2>
-                        <h6 class="card-text"></h6>
-                    </div>
-                </div>
-            </div>
-        </div> --}}
         <div class="row" style="margin-bottom: 20px; display: flex; justify-content:center; align-items:center;">
             <form action="{{ route('ap.index') }}" method="get" accept-charset="UTF-8" role="search">
                 <div class="input-box">
@@ -152,7 +128,7 @@
                             <h4 class="card-title">Liste des Aps</h4>
 
                             <button type="button" data-bs-toggle="modal" data-bs-target="#modal-ajout"
-                                class="btn btn-block btn-lg btn-gradient-primary">+ Ajouter un ap</button>
+                                class="btn btn-add btn-gradient-primary">+ Ajouter un ap</button>
                         </div>
 
                         <div class="table-responsive">
@@ -160,6 +136,11 @@
                                 <thead>
                                     <tr>
                                         <th> Nom de l'ap </th>
+                                        <th> SSID </th>
+                                        <th> Adresse de l'ap </th>
+                                        <th> Masque </th>
+                                        <th> Azimuth </th>
+                                        <th> Hauteur </th>
                                         <th> Associé au site </th>
                                         <th> Action </th>
                                     </tr>
@@ -170,13 +151,23 @@
                                             <td>
                                                 {{ $ap->nom_ap }}
                                             </td>
+                                            <td>
+                                                {{ $ap->ssid }}
+                                            </td>
+                                            <td>
+                                                {{ $ap->adresse_ap }}
+                                            </td>
+                                            <td>
+                                                {{ $ap->masque }}
+                                            </td>
+                                            <td>
+                                                {{ $ap->azimuth }}°
+                                            </td>
+                                            <td>
+                                                {{ $ap->hauteur }}m
+                                            </td>
                                             <td> {{ $ap->site->nom_site }} </td>
                                             <td>
-                                                {{-- <a href="">
-                                                <span class="page-title-icon bg-gradient-success text-white me-2 tail">
-                                                    <i class="fa-solid fa-list"></i>
-                                                </span>
-                                            </a> --}}
                                                 <a href="#edit{{ $ap->id }}"
                                                     class="page-title-icon bg-primary text-white me-2 tail" type="button"
                                                     data-bs-toggle="modal" style="border: none;">
@@ -244,6 +235,51 @@
                                     id="exampleInputUsername1" placeholder="Nom de l'ap" name="nom_ap"
                                     value="{{ old('nom_ap') }}">
                                 @error('nom_ap')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputUsername1">SSID</label>
+                                <input type="text" class="form-control @error('ssid') is-invalid @enderror"
+                                    id="exampleInputUsername1" placeholder="Nom de l'ap" name="ssid"
+                                    value="{{ old('ssid') }}">
+                                @error('ssid')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputUsername1">Adresse de l'ap</label>
+                                <input type="text" class="form-control @error('adresse_ap') is-invalid @enderror"
+                                    id="exampleInputUsername1" placeholder="Nom de l'ap" name="adresse_ap"
+                                    value="{{ old('adresse_ap') }}">
+                                @error('adresse_ap')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputUsername1">Adresse masque de l'ap</label>
+                                <input type="text" class="form-control @error('masque') is-invalid @enderror"
+                                    id="exampleInputUsername1" placeholder="Nom de l'ap" name="masque"
+                                    value="{{ old('masque') }}">
+                                @error('masque')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputUsername1">Azimuth</label>
+                                <input type="number" class="form-control @error('azimuth') is-invalid @enderror"
+                                    id="exampleInputUsername1" placeholder="Nom de l'ap" name="azimuth"
+                                    value="{{ old('azimuth') }}">
+                                @error('azimuth')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputUsername1">Hauteur de l'ap</label>
+                                <input type="number" class="form-control @error('hauteur') is-invalid @enderror"
+                                    id="exampleInputUsername1" placeholder="Nom de l'ap" name="hauteur"
+                                    value="{{ old('hauteur') }}">
+                                @error('hauteur')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>

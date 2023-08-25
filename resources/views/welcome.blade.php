@@ -5,7 +5,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>ClientTechLink</title>
+    <title>Customer Directory</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="{{ asset('assets/vendors/mdi/css/materialdesignicons.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendors/css/vendor.bundle.base.css') }}">
@@ -40,11 +40,11 @@
         <!-- partial:../../partials/_navbar.html -->
         @if (Session::has('user_pseudo'))
             <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
-                <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-                    <a class="navbar-brand brand-logo" href="../../index.html"><img src="../../assets/images/logo.svg"
-                            alt="logo" /></a>
-                    <a class="navbar-brand brand-logo-mini" href="../../index.html"><img
-                            src="../../assets/images/logo-mini.svg" alt="logo" /></a>
+                <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center" >
+                    <a class="navbar-brand brand-logo" href=""><img style="width: 60%; height: 1%; "  src="{{ asset('assets/images/logo.svg')}}"
+                       alt="logo" /></a>
+                    <a class="navbar-brand brand-logo-mini" href=""><img style="width: 100%;"
+                            src="{{ asset('assets/images/logo-mini.svg')}}" alt="logo" /></a>
                 </div>
                 {{-- <div class="brand-logo text-gradient container" >
                 <h1 class="gradient-primary">ClientTechLink</h1>
@@ -82,7 +82,7 @@
                                     <i class="mdi mdi-cached me-2 text-success"></i> Profile </a>
                                 <div class="dropdown-divider"></div>
 
-                                <form action="{{ route('logout') }}" method="POST">
+                                <form action="{{ route('logout') }}" method="GET">
                                     @csrf
                                     <button class="dropdown-item" type="submit"
                                         style="border: none; background: white; padding:10px 10px;">
@@ -273,7 +273,7 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('radio.index') }}">
-                                    <span class="menu-title">Les radios</span>
+                                    <span class="menu-title">Les stations</span>
                                     <i class="mdi mdi-signal menu-icon"></i>
                                 </a>
                             </li>

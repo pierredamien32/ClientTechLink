@@ -79,6 +79,19 @@
                 padding: 8px 18px;
             }
         }
+        @media screen and (min-width:426px) and (max-width: 500px){
+            .btn-add{
+                padding: 0 10px;
+                width: 100%;
+            }
+        }
+
+        @media screen and (max-width:425px){
+            .btn-add{
+                padding: 0 10px;
+                width: 100%;
+            }
+        }
     </style>
     <div class="content-wrapper">
         <div class="page-header">
@@ -95,44 +108,6 @@
                 </ul>
             </nav>
         </div>
-        {{-- <div class="row">
-            <div class="col-md-4 stretch-card grid-margin">
-                <div class="card bg-gradient-danger card-img-holder text-white">
-                    <div class="card-body">
-                        <img src="{{asset('assets/images/dashboard/circle.svg')}}" class="card-img-absolute" alt="circle-image" />
-                        <h4 class="font-weight-normal mb-3">Utilisateur Total <i
-                                class="mdi mdi-chart-line mdi-24px float-right"></i>
-                        </h4>
-                        <h2 class="mb-5">{{ count($utilisateurs) }}</h2>
-                        @if ($date)
-                            <h6 class="card-text">Mise à jour depuis le {{ $date->updated_at->format('d/m/y') }}</h6>
-                        @endif
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 stretch-card grid-margin">
-                <div class="card bg-gradient-info card-img-holder text-white">
-                    <div class="card-body">
-                        <img src="{{asset('assets/images/dashboard/circle.svg')}}" class="card-img-absolute" alt="circle-image" />
-                        <h4 class="font-weight-normal mb-3"><i class="mdi mdi-bookmark-outline mdi-24px float-right"></i>
-                        </h4>
-                        <h2 class="mb-5">-------</h2>
-                        <h6 class="card-text"></h6>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 stretch-card grid-margin">
-                <div class="card bg-gradient-success card-img-holder text-white">
-                    <div class="card-body">
-                        <img src="{{asset('assets/images/dashboard/circle.svg')}}" class="card-img-absolute" alt="circle-image" />
-                        <h4 class="font-weight-normal mb-3"><i class="mdi mdi-diamond mdi-24px float-right"></i>
-                        </h4>
-                        <h2 class="mb-5">-------</h2>
-                        <h6 class="card-text"></h6>
-                    </div>
-                </div>
-            </div>
-        </div> --}}
         <div class="row" style="margin-bottom: 20px; display: flex; justify-content:center; align-items:center;">
             <form action="{{ route('site.index') }}" method="get" accept-charset="UTF-8" role="search">
                 <div class="input-box">
@@ -152,7 +127,7 @@
                             <h4 class="card-title">Liste des Sites</h4>
 
                             <button type="button" data-bs-toggle="modal" data-bs-target="#modal-ajout"
-                                class="btn btn-block btn-lg btn-gradient-primary">+ Ajouter un site</button>
+                                class="btn btn-add btn-gradient-primary">+ Ajouter un site</button>
                         </div>
 
                         <div class="table-responsive">
@@ -176,11 +151,9 @@
                                                 {{ $site->local_longitude }}
                                             </td>
                                             <td>
-                                                {{-- <a href="">
-                                                <span class="page-title-icon bg-gradient-success text-white me-2 tail">
-                                                    <i class="fa-solid fa-list"></i>
-                                                </span>
-                                            </a> --}}
+                                                {{-- <button class="page-title-icon bg-primary text-white me-2 tail" type="button" style="border: none;">
+                                                    <i class="mdi mdi-content-copy"></i>
+                                                </button> --}}
                                                 <a href="#edit{{ $site->id }}"
                                                     class="page-title-icon bg-primary text-white me-2 tail" type="button"
                                                     data-bs-toggle="modal" style="border: none;">
