@@ -139,6 +139,7 @@
                                         <th> SSID </th>
                                         <th> Adresse de l'ap </th>
                                         <th> Masque </th>
+                                        <th> Adresse mac</th>
                                         <th> Azimuth </th>
                                         <th> Hauteur </th>
                                         <th> Associé au site </th>
@@ -159,6 +160,9 @@
                                             </td>
                                             <td>
                                                 {{ $ap->masque }}
+                                            </td>
+                                            <td>
+                                                {{ $ap->adresse_mac }}
                                             </td>
                                             <td>
                                                 {{ $ap->azimuth }}°
@@ -230,60 +234,6 @@
                         <form action="{{ route('ap.store') }}" method="POST" class="forms-sample">
                             @csrf
                             <div class="form-group">
-                                <label for="exampleInputUsername1">Nom de l'ap</label>
-                                <input type="text" class="form-control @error('nom_ap') is-invalid @enderror"
-                                    id="exampleInputUsername1" placeholder="Nom de l'ap" name="nom_ap"
-                                    value="{{ old('nom_ap') }}">
-                                @error('nom_ap')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputUsername1">SSID</label>
-                                <input type="text" class="form-control @error('ssid') is-invalid @enderror"
-                                    id="exampleInputUsername1" placeholder="Nom de l'ap" name="ssid"
-                                    value="{{ old('ssid') }}">
-                                @error('ssid')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputUsername1">Adresse de l'ap</label>
-                                <input type="text" class="form-control @error('adresse_ap') is-invalid @enderror"
-                                    id="exampleInputUsername1" placeholder="Nom de l'ap" name="adresse_ap"
-                                    value="{{ old('adresse_ap') }}">
-                                @error('adresse_ap')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputUsername1">Adresse masque de l'ap</label>
-                                <input type="text" class="form-control @error('masque') is-invalid @enderror"
-                                    id="exampleInputUsername1" placeholder="Nom de l'ap" name="masque"
-                                    value="{{ old('masque') }}">
-                                @error('masque')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputUsername1">Azimuth</label>
-                                <input type="number" class="form-control @error('azimuth') is-invalid @enderror"
-                                    id="exampleInputUsername1" placeholder="Nom de l'ap" name="azimuth"
-                                    value="{{ old('azimuth') }}">
-                                @error('azimuth')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputUsername1">Hauteur de l'ap</label>
-                                <input type="number" class="form-control @error('hauteur') is-invalid @enderror"
-                                    id="exampleInputUsername1" placeholder="Nom de l'ap" name="hauteur"
-                                    value="{{ old('hauteur') }}">
-                                @error('hauteur')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="form-group">
                                 <label for="exampleFormControlSelect3">Associé au site</label>
                                 <select name="nom_site"
                                     class="form-control form-control-sm @error('nom_site') is-invalid @enderror"
@@ -296,6 +246,70 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
+                            <div class="form-group">
+                                <label for="exampleInputUsername1">Nom de l'ap</label>
+                                <input type="text" class="form-control @error('nom_ap') is-invalid @enderror"
+                                    id="exampleInputUsername1" placeholder="Nom de l'ap" name="nom_ap"
+                                    value="AT-AP-">
+                                @error('nom_ap')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputUsername1">SSID</label>
+                                <input type="text" class="form-control @error('ssid') is-invalid @enderror"
+                                    id="exampleInputUsername1" placeholder="Nom de l'ap" name="ssid"
+                                    value="AT-AP-">
+                                @error('ssid')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputUsername1">Adresse ip de l'ap</label>
+                                <input type="text" class="form-control @error('adresse_ap') is-invalid @enderror"
+                                    id="exampleInputUsername1" placeholder="Adresse ip de l'ap" name="adresse_ap"
+                                    value="192.168.0.0">
+                                @error('adresse_ap')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputUsername1">Adresse masque de l'ap</label>
+                                <input type="text" class="form-control @error('masque') is-invalid @enderror"
+                                    id="exampleInputUsername1" placeholder="Adresse masque l'ap" name="masque"
+                                    value="">
+                                @error('masque')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputUsername1">Adresse mac de l'ap</label>
+                                <input type="text" class="form-control @error('adresse_mac') is-invalid @enderror"
+                                    id="exampleInputUsername1" placeholder="Adresse mac de l'ap" name="adresse_mac"
+                                    value="">
+                                @error('adresse_mac')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputUsername1">Azimuth</label>
+                                <input type="number" class="form-control @error('azimuth') is-invalid @enderror"
+                                    id="exampleInputUsername1" placeholder="Azimuth l'ap" name="azimuth"
+                                    value="{{ old('azimuth') }}">
+                                @error('azimuth')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputUsername1">Hauteur de l'ap</label>
+                                <input type="number" class="form-control @error('hauteur') is-invalid @enderror"
+                                    id="exampleInputUsername1" placeholder="Hauteur de l'ap" name="hauteur"
+                                    value="{{ old('hauteur') }}">
+                                @error('hauteur')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
                                 <button type="submit" class="btn btn-primary">Enregister</button>

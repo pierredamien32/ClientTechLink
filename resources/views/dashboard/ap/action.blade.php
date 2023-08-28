@@ -25,52 +25,61 @@
                         <input type="text" class="form-control @error('ssid') is-invalid @enderror"
                             id="exampleInputUsername1" placeholder="Nom de l'ap" name="ssid"
                             value="{{ $ap->ssid }}">
-                        @error('ssid')
+                        {{-- @error('ssid')
                             <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
+                        @enderror --}}
                     </div>
                     <div class="form-group">
                         <label for="exampleInputUsername1">Adresse de l'ap</label>
                         <input type="text" class="form-control @error('adresse_ap') is-invalid @enderror"
                             id="exampleInputUsername1" placeholder="Nom de l'ap" name="adresse_ap"
                             value="{{ $ap->adresse_ap }}">
-                        @error('adresse_ap')
+                        {{-- @error('adresse_ap')
                             <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
+                        @enderror --}}
                     </div>
                     <div class="form-group">
                         <label for="exampleInputUsername1">Adresse masque de l'ap</label>
                         <input type="text" class="form-control @error('masque') is-invalid @enderror"
                             id="exampleInputUsername1" placeholder="Nom de l'ap" name="masque"
                             value="{{ $ap->masque }}">
-                        @error('masque')
+                        {{-- @error('masque')
                             <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
+                        @enderror --}}
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputUsername1">Adresse mac de l'ap</label>
+                        <input type="text" class="form-control @error('adresse_mac') is-invalid @enderror"
+                            id="exampleInputUsername1" placeholder="Adresse mac de l'ap" name="adresse_mac"
+                            value="{{ $ap->adresse_mac }}">
+                        {{-- @error('adresse_mac')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror --}}
                     </div>
                     <div class="form-group">
                         <label for="exampleInputUsername1">Azimuth</label>
                         <input type="number" class="form-control @error('azimuth') is-invalid @enderror"
                             id="exampleInputUsername1" placeholder="Nom de l'ap" name="azimuth"
                             value="{{ $ap->azimuth }}">
-                        @error('azimuth')
+                        {{-- @error('azimuth')
                             <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
+                        @enderror --}}
                     </div>
                     <div class="form-group">
                         <label for="exampleInputUsername1">Hauteur de l'ap</label>
                         <input type="number" class="form-control @error('hauteur') is-invalid @enderror"
                             id="exampleInputUsername1" placeholder="Nom de l'ap" name="hauteur"
                             value="{{ $ap->hauteur }}">
-                        @error('hauteur')
+                        {{-- @error('hauteur')
                             <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
+                        @enderror --}}
                     </div>
                     <div class="form-group">
                         <label for="exampleFormControlSelect3">Associé au site</label>
                         <select name="nom_site"
                             class="form-control form-control-sm @error('nom_site') is-invalid @enderror"
                             id="exampleFormControlSelect3">
-                            <option >{{ $ap->site->nom_site }}</option>
+                            <option>{{ $ap->site->nom_site }}</option>
                             @foreach ($sites as $site)
                                 @if ($site->nom_site == $ap->site->nom_site)
                                 @else

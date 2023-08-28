@@ -44,10 +44,11 @@ class ApController extends Controller
         $reponse = $request->validate([
             'nom_ap' => 'required|string',
             'ssid' => 'required',
-            'adresse_ap' => 'required|string',
-            'masque' => 'required|string',
+            'adresse_ap' => 'required|string|max:15',
+            'masque' => 'required|string|max:15',
             'azimuth' => 'required|string',
-            'hauteur' => 'required|string'
+            'hauteur' => 'required|string',
+            'adresse_mac' => 'required'
         ]);
 
         // dd('Id = '.$request->nom_site);
@@ -73,7 +74,8 @@ class ApController extends Controller
                 'adresse_ap' => $request->adresse_ap,
                 'masque' => $request->masque,
                 'azimuth' => $request->azimuth,
-                'hauteur' => $request->hauteur
+                'hauteur' => $request->hauteur,
+                'adresse_mac' => $request->adresse_mac
             ]);
             return redirect()->route('ap.index');
         }
@@ -102,14 +104,14 @@ class ApController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $reponse = $request->validate([
-            'nom_ap' => 'required|string',
-            'ssid' => 'required',
-            'adresse_ap' => 'required|string',
-            'masque' => 'required|string',
-            'azimuth' => 'required|string',
-            'hauteur' => 'required|string'
-        ]);
+        // $reponse = $request->validate([
+        //     'nom_ap' => 'required|string',
+        //     'ssid' => 'required',
+        //     'adresse_ap' => 'required|string',
+        //     'masque' => 'required|string',
+        //     'azimuth' => 'required|string',
+        //     'hauteur' => 'required|string'
+        // ]);
 
         $ap = Ap::findOrFail($id);
 
@@ -124,6 +126,7 @@ class ApController extends Controller
         $ap->masque = $request->masque;
         $ap->azimuth = $request->azimuth;
         $ap->hauteur = $request->hauteur;
+        $ap->adresse_mac = $request->adresse_mac;
 
         $ap->update();
 

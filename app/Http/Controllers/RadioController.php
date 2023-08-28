@@ -56,10 +56,10 @@ class RadioController extends Controller
     {
         $reponse = $request->validate([
             'nom_radio' => 'required|string',
-            'adresse_radio' => 'required',
+            'adresse_radio' => 'required|string|max:15',
             'signal' => 'required',
-            'passerelle' => 'required',
-            'masque' => 'required',
+            'passerelle' => 'required|string|max:15',
+            'masque' => 'required|string|max:15',
             'nom_ap' => 'required',
             'status' => 'required'
         ]);
@@ -157,7 +157,7 @@ class RadioController extends Controller
         //     'status' => 'required'
         // ]);
         $radio = Radio::findOrFail($id);
-        
+
     //    dd('Ok '.$request->nom_radio);
     //    dd('Ok '.$request->adresse_radio);
     //    dd('Ok '.$request->signal);

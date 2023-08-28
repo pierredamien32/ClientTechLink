@@ -16,7 +16,8 @@ class Ap extends Model
         'adresse_ap',
         'masque',
         'azimuth',
-        'hauteur'
+        'hauteur',
+        'adresse_mac'
     ];
 
     public function site(){

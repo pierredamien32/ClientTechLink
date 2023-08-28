@@ -53,11 +53,11 @@ class RouteurController extends Controller
     {
         $reponse = $request->validate([
             'nom_routeur' => 'required|string',
-            'adresse_routeur' => 'required',
+            'adresse_routeur' => 'required|string|max:15',
             'marque' => 'required',
             'modele' => 'required',
-            'passerelle' => 'required',
-            'masque' => 'required'
+            'passerelle' => 'required|string|max:15',
+            'masque' => 'required|string|max:15'
         ]);
 
         $nom_routeur = $request->nom_routeur;
