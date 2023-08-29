@@ -146,9 +146,9 @@
                                             <td>
                                                 {{ $site->nom_site }}
                                             </td>
-                                            <td> {{ $site->local_latitude }} </td>
+                                            <td> {{ $site->local_latitude_site }} </td>
                                             <td>
-                                                {{ $site->local_longitude }}
+                                                {{ $site->local_longitude_site }}
                                             </td>
                                             <td>
                                                 {{-- <button class="page-title-icon bg-primary text-white me-2 tail" type="button" style="border: none;">

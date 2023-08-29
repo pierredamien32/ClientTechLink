@@ -14,7 +14,7 @@ class Ap extends Model
         'site_id',
         'ssid',
         'adresse_ap',
-        'masque',
+        'masque_ap',
         'azimuth',
         'hauteur',
         'adresse_mac'

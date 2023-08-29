@@ -42,7 +42,7 @@
                         <label for="exampleInputUsername1">Adresse masque de l'ap</label>
                         <input type="text" class="form-control @error('masque') is-invalid @enderror"
                             id="exampleInputUsername1" placeholder="Nom de l'ap" name="masque"
-                            value="{{ $ap->masque }}">
+                            value="{{ $ap->masque_ap }}">
                         {{-- @error('masque')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror --}}

@@ -159,7 +159,7 @@
                                                 {{ $ap->adresse_ap }}
                                             </td>
                                             <td>
-                                                {{ $ap->masque }}
+                                                {{ $ap->masque_ap }}
                                             </td>
                                             <td>
                                                 {{ $ap->adresse_mac }}

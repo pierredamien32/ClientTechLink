@@ -11,8 +11,8 @@ class Site extends Model
     protected $table = 'sites';
     protected $fillable = [
         'nom_site',
-        'local_latitude',
-        'local_longitude',
+        'local_latitude_site',
+        'local_longitude_site',
     ];
 
     public function aps(){

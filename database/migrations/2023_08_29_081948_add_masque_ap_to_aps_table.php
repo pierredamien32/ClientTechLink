@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('sites', function (Blueprint $table) {
-            $table->float('local_latitude_site', 12, 10);
-            $table->float('local_longitude_site', 12, 10);
+        Schema::table('aps', function (Blueprint $table) {
+            $table->string('masque_ap', 15)->nullable();
         });
     }
 
@@ -22,7 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('sites', function (Blueprint $table) {
+        Schema::table('aps', function (Blueprint $table) {
             //
         });
     }

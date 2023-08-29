@@ -12,8 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('sites', function (Blueprint $table) {
-            $table->float('local_latitude_site', 12, 10);
-            $table->float('local_longitude_site', 12, 10);
+            $table->dropColumn(['local_latitude', 'local_longitude']);
         });
     }
 

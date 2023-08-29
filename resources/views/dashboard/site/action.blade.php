@@ -24,7 +24,7 @@
                         <label for="exampleInputEmail1">Localisation latitude</label>
                         <input type="number" id="floatInput" name="local_latitude" step="any"
                             class="form-control @error('local_latitude') is-invalid @enderror" id="exampleInputEmail1"
-                            placeholder="Localisation latitude" value="{{ $site->local_latitude }}">
+                            placeholder="Localisation latitude" value="{{ $site->local_latitude_site }}">
                         {{-- @error('local_latitude')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror --}}
@@ -33,7 +33,7 @@
                         <label for="exampleInputEmail1">Localisation longitude</label>
                         <input type="number" id="floatInput" name="local_longitude" step="any"
                             class="form-control @error('local_longitude') is-invalid @enderror" id="exampleInputEmail1"
-                            placeholder="Localisation longitude" value="{{ $site->local_longitude }}">
+                            placeholder="Localisation longitude" value="{{ $site->local_longitude_site }}">
                         {{-- @error('local_longitude')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror --}}

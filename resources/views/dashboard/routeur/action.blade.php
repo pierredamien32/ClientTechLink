@@ -52,7 +52,7 @@
                         <label for="exampleInputEmail1">Passerelle du routeur</label>
                         <input type="text" id="floatInput" name="passerelle" step="any"
                             class="form-control @error('passerelle') is-invalid @enderror" id="exampleInputEmail1"
-                            placeholder="Passerelle du routeur" value="{{ $routeur->passerelle }}">
+                            placeholder="Passerelle du routeur" value="{{ $routeur->passerelle_routeur }}">
                         @error('passerelle')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -61,7 +61,7 @@
                         <label for="exampleInputEmail1">Adresse masque du routeur</label>
                         <input type="text" id="floatInput" name="masque" step="any"
                             class="form-control @error('masque') is-invalid @enderror" id="exampleInputEmail1"
-                            placeholder="masque du routeur" value="{{ $routeur->masque }}">
+                            placeholder="masque du routeur" value="{{ $routeur->masque_routeur }}">
                         @error('masque')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror

@@ -14,8 +14,8 @@ class Routeur extends Model
         'adresse_routeur',
         'marque',
         'modele',
-        'passerelle',
-        'masque',
+        'passerelle_routeur',
+        'masque_routeur',
         'emplacement_id'
     ];
 

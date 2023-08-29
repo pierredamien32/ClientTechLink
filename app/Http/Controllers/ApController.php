@@ -72,7 +72,7 @@ class ApController extends Controller
                 'site_id' => $site_id[0]->id,
                 'ssid' => $request->ssid,
                 'adresse_ap' => $request->adresse_ap,
-                'masque' => $request->masque,
+                'masque_ap' => $request->masque,
                 'azimuth' => $request->azimuth,
                 'hauteur' => $request->hauteur,
                 'adresse_mac' => $request->adresse_mac
@@ -123,7 +123,7 @@ class ApController extends Controller
         $ap->site_id = $site_id[0]->id;
         $ap->ssid = $request->ssid;
         $ap->adresse_ap = $request->adresse_ap;
-        $ap->masque = $request->masque;
+        $ap->masque_ap = $request->masque;
         $ap->azimuth = $request->azimuth;
         $ap->hauteur = $request->hauteur;
         $ap->adresse_mac = $request->adresse_mac;

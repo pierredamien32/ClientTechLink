@@ -175,10 +175,10 @@
                                             </td>
                                             <td> {{ $routeur->adresse_routeur }} </td>
                                             <td>
-                                                {{ $routeur->passerelle }}
+                                                {{ $routeur->passerelle_routeur }}
                                             </td>
                                             <td>
-                                                {{ $routeur->masque }}
+                                                {{ $routeur->masque_routeur }}
                                             </td>
 
                                             @if ($routeur->emplacement->client->nom === '--------')

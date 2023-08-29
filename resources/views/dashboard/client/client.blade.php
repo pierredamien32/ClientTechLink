@@ -206,7 +206,7 @@
                                             <td> {{ $client->code_anyx }} </td>
                                             <td> {{ $client->code_befra }} </td>
                                             <td>
-                                                <a href="">
+                                                <a href="{{ route('client.info_client', $client->id) }}">
                                                     <span class="page-title-icon bg-gradient-success text-white me-2 tail">
                                                         <i class="fa-solid fa-list"></i>
                                                     </span>
@@ -394,52 +394,6 @@
         </div>
     </div>
     {{-- Fin du Modal boite d'Ajout --}}
-
-    {{-- Modal boite de modification  --}}
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal fade" id="modal-modification" data-bs-backdrop="static" data-bs-keyboard="false"
-            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="staticBackdropLabel">Modification d'un client</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                        <button type="button" class="btn btn-primary">Modifier</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    {{-- Fin du Modal boite de modification --}}
-
-    {{-- Modal boite de confirmation  --}}
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal fade" id="modal-confirmation" data-bs-backdrop="static" data-bs-keyboard="false"
-            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="staticBackdropLabel">Suppression d'un client</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        Êtes vous sûr de vouloir supprimer ce client?
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                        <button type="button" class="btn btn-primary">Oui, je suis sûr!</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    {{-- Fin du Modal boite de confirmation --}}
 
     <!-- Ajoutez ce script dans votre page HTML -->
     <script>

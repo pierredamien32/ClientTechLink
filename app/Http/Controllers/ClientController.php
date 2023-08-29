@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Client;
 use App\Models\ClientModifier;
+use App\Models\Emplacement;
 use Illuminate\Http\Request;
 
 class ClientController extends Controller
@@ -56,6 +57,35 @@ class ClientController extends Controller
         }
         $date = $clients->first();
         return view('dashboard.client.client', compact('clients', 'date', 'clientParticulier', 'clientEntreprise', 'date_maj_particulier', 'date_maj_entreprise'));
+    }
+
+    public function info_client(string $id)
+    {
+
+        $client = Client::findOrFail($id);
+
+        $info_client = Client::join('emplacements', 'emplacements.client_id', '=', 'clients.id')
+            ->join('radios', 'radios.emplacement_id', '=', 'emplacements.id')
+            ->join('aps', 'radios.ap_id', '=', 'aps.id')
+            ->join('sites', 'aps.site_id', '=', 'sites.id')
+            ->join('routeurs', 'routeurs.emplacement_id', '=', 'emplacements.id')
+            ->where('emplacements.client_id', '=', $client->id)
+            ->get(['emplacements.*', 'radios.*','clients.*','aps.*', 'sites.*', 'routeurs.*']);
+
+        // $info_client = Emplacement::join('clients', 'clients.emplacement_id', '=', 'emplacements.id')
+        //     ->join('radios', 'radios.emplacement_id', '=', 'emplacements.id')
+        //     ->join('routeurs', 'routeurs.emplacement_id', '=', 'emplacements.id')
+        //     ->where('emplacements.client_id', '=', $client)
+        //     ->get(['emplacements.*', 'radios.*', 'routeurs.*']);
+
+        // if($info_client == false ){
+        //     dd('Null');
+        // }else{
+        //     dd($info_client);
+        // }
+        
+        // dd($info_client[0]->nom);
+        return view('dashboard.client.informationClient', compact('info_client'));
     }
 
     /**

@@ -56,8 +56,8 @@ class SiteController extends Controller
         } else {
             $site = Site::create([
                 'nom_site' => $nom_site,
-                'local_latitude' => $request->local_latitude,
-                'local_longitude' => $request->local_longitude
+                'local_latitude_site' => $request->local_latitude,
+                'local_longitude_site' => $request->local_longitude
             ]);
             return redirect()->route('site.index');
         }
@@ -89,8 +89,8 @@ class SiteController extends Controller
         $site = Site::findOrFail($id);
 
         $site->nom_site = $request->nom_site;
-        $site->local_latitude = $request->local_latitude;
-        $site->local_longitude = $request->local_longitude;
+        $site->local_latitude_site = $request->local_latitude;
+        $site->local_longitude_site = $request->local_longitude;
 
         $site->update();
 

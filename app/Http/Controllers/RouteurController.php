@@ -62,6 +62,7 @@ class RouteurController extends Controller
 
         $nom_routeur = $request->nom_routeur;
         $routeur = Routeur::where('nom_routeur', $nom_routeur)->first();
+
         if ($routeur) {
             // L'utilisateur existe déjà dans la base de données
             // Gérer l'erreur ou afficher un message d'erreur approprié
@@ -74,19 +75,26 @@ class RouteurController extends Controller
                 $emplacement_denomination_id = Client::join('emplacements', 'clients.id', '=', 'emplacements.client_id')
                     ->where('denomination', '=', $request->denomination)
                     ->get('emplacements.id');
+                $routeur_denomination = Routeur::where('emplacement_id', $emplacement_denomination_id[0]->id)->first();
 
                 // dd('Ok '.$emplacement_denomination_id);
+                if ($routeur_denomination) {
+                    // L'utilisateur existe déjà dans la base de données
+                    // Gérer l'erreur ou afficher un message d'erreur approprié
 
-                $routeur = Routeur::create([
-                    'nom_routeur' => $nom_routeur,
-                    'adresse_routeur' => $request->adresse_routeur,
-                    'marque' => $request->marque,
-                    'modele' => $request->modele,
-                    'passerelle' => $request->passerelle,
-                    'masque' => $request->masque,
-                    'emplacement_id' => $emplacement_denomination_id[0]->id,
-                ]);
-                return redirect()->route('routeur.index');
+                    return redirect()->back()->withErrors(['denomination' => 'Cet entreprise a déjà un routeur.'])->withInput();
+                } else {
+                    $routeur = Routeur::create([
+                        'nom_routeur' => $nom_routeur,
+                        'adresse_routeur' => $request->adresse_routeur,
+                        'marque' => $request->marque,
+                        'modele' => $request->modele,
+                        'passerelle_routeur' => $request->passerelle,
+                        'masque_routeur' => $request->masque,
+                        'emplacement_id' => $emplacement_denomination_id[0]->id,
+                    ]);
+                    return redirect()->route('routeur.index');
+                }
             }
 
             if ($request->nom_client) {
@@ -95,18 +103,27 @@ class RouteurController extends Controller
                     ->where('nom', '=', $request->nom_client)
                     ->get('emplacements.id');
 
-                // dd('Ok '.$emplacement_nom_id);
+                $routeur_nom = Routeur::where('emplacement_id', $emplacement_nom_id[0]->id)->first();
 
-                $routeur = Routeur::create([
-                    'nom_routeur' => $nom_routeur,
-                    'adresse_routeur' => $request->adresse_routeur,
-                    'marque' => $request->marque,
-                    'modele' => $request->modele,
-                    'passerelle' => $request->passerelle,
-                    'masque' => $request->masque,
-                    'emplacement_id' => $emplacement_nom_id[0]->id,
-                ]);
-                return redirect()->route('routeur.index');
+                // dd('Ok '.$emplacement_nom_id);
+                if ($routeur_nom) {
+                    // L'utilisateur existe déjà dans la base de données
+                    // Gérer l'erreur ou afficher un message d'erreur approprié
+
+                    return redirect()->back()->withErrors(['nom_client' => 'Ce particulier a déjà un routeur.'])->withInput();
+                } else {
+
+                    $routeur = Routeur::create([
+                        'nom_routeur' => $nom_routeur,
+                        'adresse_routeur' => $request->adresse_routeur,
+                        'marque' => $request->marque,
+                        'modele' => $request->modele,
+                        'passerelle_routeur' => $request->passerelle,
+                        'masque_routeur' => $request->masque,
+                        'emplacement_id' => $emplacement_nom_id[0]->id,
+                    ]);
+                    return redirect()->route('routeur.index');
+                }
             }
         }
     }
@@ -135,9 +152,9 @@ class RouteurController extends Controller
     public function update(Request $request, string $id)
     {
         $routeur = Routeur::findOrFail($id);
-        
+
         // dd($request->nom_ap);
-       
+
         if ($request->denomination) {
 
             $emplacement_denomination_id = Client::join('emplacements', 'clients.id', '=', 'emplacements.client_id')
@@ -151,8 +168,8 @@ class RouteurController extends Controller
             $routeur->adresse_routeur = $request->adresse_routeur;
             $routeur->marque = $request->marque;
             $routeur->modele = $request->modele;
-            $routeur->passerelle = $request->passerelle;
-            $routeur->masque = $request->masque;
+            $routeur->passerelle_routeur = $request->passerelle;
+            $routeur->masque_routeur = $request->masque;
             $routeur->emplacement_id = $emplacement_denomination_id[0]->id;
             $routeur->update();
             return redirect()->route('routeur.index');
@@ -165,13 +182,13 @@ class RouteurController extends Controller
                 ->get('emplacements.id');
 
             // dd('Ok '.$emplacement_nom_id);
-            
+
             $routeur->nom_routeur = $request->nom_routeur;
             $routeur->adresse_routeur = $request->adresse_routeur;
             $routeur->marque = $request->marque;
             $routeur->modele = $request->modele;
-            $routeur->passerelle = $request->passerelle;
-            $routeur->masque = $request->masque;
+            $routeur->passerelle_routeur = $request->passerelle;
+            $routeur->masque_routeur = $request->masque;
             $routeur->emplacement_id = $emplacement_nom_id[0]->id;
             $routeur->update();
             // dd('je suis là');
@@ -185,7 +202,7 @@ class RouteurController extends Controller
     public function destroy(string $id)
     {
         $routeur = Routeur::findOrFail($id);
-        
+
         $routeur->delete();
 
         return redirect()->back();

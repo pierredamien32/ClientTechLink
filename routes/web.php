@@ -56,6 +56,7 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
 
         Route::prefix('clients')->group(function () {
             Route::get('/', [ClientController::class, 'index'])->name('client.index');
+            Route::get('/informations/client{id}', [ClientController::class, 'info_client'])->name('client.info_client');
             Route::post('/particuliers', [ClientController::class, 'FormParticulier'])->name('client.FormParticulier');
             Route::post('/entreprises', [ClientController::class, 'FormEntreprise'])->name('client.FormEntreprise');
             Route::post('/update/{id}', [ClientController::class, 'update'])->name('client.update');

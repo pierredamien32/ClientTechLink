@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('sites', function (Blueprint $table) {
-            $table->float('local_latitude_site', 12, 10);
-            $table->float('local_longitude_site', 12, 10);
+        Schema::table('routeurs', function (Blueprint $table) {
+            $table->string('passerelle_routeur', 15);
+            $table->string('masque_routeur', 15);
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('sites', function (Blueprint $table) {
+        Schema::table('routeurs', function (Blueprint $table) {
             //
         });
     }
