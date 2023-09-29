@@ -77,17 +77,12 @@
                                 <div class="brand-logo container">
                                     <img style="width: 100%;" src="{{ asset('assets/images/logo.svg')}}">
                                 </div>
-                                @error('erreur')
-                                    <div class="d-flex justify-content-center align-items-center">
-                                        <span class="invalid-feedback">{{ $message }}</span>
-                                    </div>
-                                @enderror
                                 <h4>Salut! Commençons</h4>
                                 <h6 class="font-weight-light">Connectez-vous pour continuer.</h6>
                                 <div class="form-group">
                                     <input type="email" name="email"
                                         class="form-control form-control-lg @error('email') is-invalid @enderror"
-                                        id="exampleInputEmail1" placeholder="Email" value="{{ old('email') }}">
+                                        id="exampleInputEmail1" placeholder="Email" @if(isset($_COOKIE["email"])) value="{{ $_COOKIE["email"] }}" @endif>
                                     @error('email')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -95,7 +90,7 @@
                                 <div class="form-group">
                                     <input type="password" name="password"
                                         class="form-control form-control-lg @error('password') is-invalid @enderror"
-                                        id="exampleInputPassword1" placeholder="Password">
+                                        id="exampleInputPassword1" placeholder="Password" @if(isset($_COOKIE["password"])) value="{{ $_COOKIE["password"] }}" @endif>
                                     @error('password')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -108,7 +103,7 @@
                                 <div class="my-2 d-flex justify-content-between align-items-center">
                                     <div class="form-check">
                                         <label class="form-check-label text-muted">
-                                            <input type="checkbox" class="form-check-input"> Gardez-moi connecté
+                                            <input type="checkbox" class="form-check-input" name="remember"> Gardez-moi connecté
                                         </label>
                                     </div>
                                     <a href="#" class="auth-link text-black">Mot de passe oublié?</a>

@@ -24,6 +24,37 @@
     *{
         font-family: 'Nunito Sans', sans-serif;
     }
+    @-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.fadeIn {
+  -webkit-animation-name: fadeIn;
+  animation-name: fadeIn;
+}
+
+.animated {
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
 .style {
     display: flex;
     flex-direction: column;
@@ -86,7 +117,7 @@ p{
 }
 </style>
 
-<body class="bg-gradient-primary body" style="z-index: 1;">
+<body class="bg-gradient-primary body fadeIn animated" style="z-index: 1;">
     <div class="container d-flex justify-content-center align-items-center min-vh-100">
         <div class="style">
             <h1 class="text-white font-weight-bold" style="text-align: center;">Bienvenue sur Customer Directory!</h1>
